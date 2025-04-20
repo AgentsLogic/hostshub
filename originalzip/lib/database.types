@@ -1,0 +1,69 @@
+export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
+
+export interface Database {
+  public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      [_ in never]: never
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+}
+
+export interface Property {
+  id: string
+  owner_id: string
+  name: string
+  description: string
+  address: string
+  city: string
+  state: string
+  zip_code: string
+  country: string
+  property_type: string
+  bedrooms: number
+  bathrooms: number
+  max_guests: number
+  amenities: string[]
+  images: string[]
+  base_price: number
+  cleaning_fee: number
+  service_fee: number
+  tax_rate: number
+  min_nights: number
+  max_nights: number
+  check_in_time: string
+  check_out_time: string
+  house_rules: string
+  cancellation_policy: string
+  status: "active" | "inactive" | "maintenance" | "pending" | "draft" | "published"
+  created_at: string
+  updated_at: string
+  template?: string
+  airbnb_id?: string
+  vrbo_id?: string
+  custom_domain?: string
+  subdomain?: string
+  visitors?: number
+  bookings?: number
+  revenue?: number
+}
+
+export interface PropertyImage {
+  id: string
+  property_id: string
+  url: string
+  is_cover: boolean
+  created_at: string
+}
+

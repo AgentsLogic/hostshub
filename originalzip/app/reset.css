@@ -1,0 +1,55 @@
+/* This file will be imported in layout.tsx to ensure basic styles are applied */
+
+/* Reset text colors */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #2d3748;
+}
+
+p,
+span,
+div {
+  color: #4a5568;
+}
+
+/* Primary button styles */
+.btn-primary {
+  background-color: #2e8b57 !important;
+  color: white !important;
+}
+
+.btn-blue {
+  background-color: #4682b4 !important;
+  color: white !important;
+}
+
+/* Text color classes */
+.text-forest-green {
+  color: #2e8b57 !important;
+}
+
+.text-steel-blue {
+  color: #4682b4 !important;
+}
+
+.text-dark-slate {
+  color: #4a5568 !important;
+}
+
+/* Background color classes */
+.bg-forest-green {
+  background-color: #2e8b57 !important;
+}
+
+.bg-steel-blue {
+  background-color: #4682b4 !important;
+}
+
+.bg-light-gray {
+  background-color: #f7fafc !important;
+}
+

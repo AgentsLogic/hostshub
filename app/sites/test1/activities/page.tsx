@@ -1,5 +1,5 @@
-import { Activities } from '../../pages/Activities';
-import { Layout } from '../../components/Layout';
+import { Activities } from '@/templates/project/src/pages/Activities';
+import { Layout } from '@/templates/project/src/components/Layout';
 
 export default function Page() {
   return (

@@ -41,6 +41,9 @@ export function MainHeader({ className }: MainHeaderProps) {
           <Link href="/help" className="text-sm font-medium hover:underline underline-offset-4">
             Help
           </Link>
+          <Link href="#" className="text-sm font-medium hover:underline underline-offset-4">
+            Forum
+          </Link>
         </nav>
         <div className="flex gap-4">
           <Link href="/login">

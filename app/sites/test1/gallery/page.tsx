@@ -1,5 +1,5 @@
-import { Gallery } from '../../pages/Gallery';
-import { Layout } from '../../components/Layout';
+import { Gallery } from '@/templates/project/src/pages/Gallery';
+import { Layout } from '@/templates/project/src/components/Layout';
 
 export default function Page() {
   return (

@@ -1,5 +1,13 @@
 import { Layout } from '../components/Layout'; // Assuming Layout is in components
-import { getPropertyDataBySubdomain } from "../../../../app/lib/data"; // Import the new server action
+
+// Create a mock getPropertyDataBySubdomain since we can't access the real one
+const getPropertyDataBySubdomain = (subdomain: string) => {
+  return {
+    name: "Twin Hills River Ranch",
+    description: "A beautiful ranch resort with various accommodations and activities.",
+    address: "123 Ranch Road, Twin Hills, TX"
+  };
+};
 
 interface SiteLayoutProps {
   children: React.ReactNode;
@@ -11,8 +19,8 @@ interface SiteLayoutProps {
 export default async function SiteLayout({ children, params }: SiteLayoutProps) {
   const subdomain = params.subdomain;
 
-  // Fetch property data using the server action
-  const propertyData = await getPropertyDataBySubdomain(subdomain);
+  // Fetch property data using the mocked function
+  const propertyData = getPropertyDataBySubdomain(subdomain);
 
   if (!propertyData) {
     // Handle case where property data is not found

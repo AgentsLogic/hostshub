@@ -1,11 +1,12 @@
+'use client';
 import React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { Home, Bed, Mountain, Camera, Mail, Menu, X } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
-  propertyData: {
+  propertyData?: {
     name: string;
     description: string;
     address: string;
@@ -14,7 +15,7 @@ interface LayoutProps {
 
 export const Layout = ({ children, propertyData }: LayoutProps) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const router = useRouter();
+  const pathname = usePathname();
 
   const navigation = [
     { name: 'Home', href: '/', icon: Home },
@@ -42,7 +43,7 @@ export const Layout = ({ children, propertyData }: LayoutProps) => {
                   key={item.name}
                   href={item.href}
                   // className={`${
-                  //   router.pathname === item.href // Cannot use router in RSC
+                  //   pathname === item.href // Cannot use router in RSC
                   //     ? 'text-blue-600'
                   //     : 'text-gray-700 hover:text-blue-600'
                   // } flex items-center px-3 py-2 text-sm font-medium transition-colors duration-200`}
@@ -102,10 +103,14 @@ export const Layout = ({ children, propertyData }: LayoutProps) => {
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h3 className="text-lg font-semibold mb-4">{propertyData.name}</h3>
-              <p className="text-gray-300">
-                {propertyData.description}
-              </p>
+              {propertyData && (
+                <>
+                  <h3 className="text-lg font-semibold mb-4">{propertyData.name}</h3>
+                  <p className="text-gray-300">
+                    {propertyData.description}
+                  </p>
+                </>
+              )}
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
@@ -136,7 +141,7 @@ export const Layout = ({ children, propertyData }: LayoutProps) => {
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
-            <p>&copy; {new Date().getFullYear()} {propertyData.name}. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} {propertyData?.name || 'Our Property'}. All rights reserved.</p>
           </div>
         </div>
       </footer>

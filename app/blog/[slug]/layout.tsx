@@ -1,13 +1,17 @@
+import type { Metadata } from 'next';
+
 export default function BlogLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: { slug: string };
 }) {
   return children;
 }
 
 // Metadata function for SEO
-export function generateMetadata({ params }: { params: { slug: string } }) {
+export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const blogPosts = [
     {
       slug: "5-ways-to-automate-your-airbnb-business",

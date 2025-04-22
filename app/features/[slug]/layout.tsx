@@ -1,13 +1,17 @@
+import type { Metadata } from 'next';
+
 export default function FeatureLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: { slug: string };
 }) {
   return children;
 }
 
 // Metadata function for SEO
-export function generateMetadata({ params }: { params: { slug: string } }) {
+export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const featureDetails: Record<string, { title: string; description: string }> = {
     "beautiful-websites": {
       title: "Beautiful Websites",

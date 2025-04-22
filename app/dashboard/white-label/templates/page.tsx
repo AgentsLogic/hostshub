@@ -9,7 +9,8 @@ import { Button } from "@/components/ui/button"
 export default function WhiteLabelTemplatesPage() {
   return (
     <DashboardShell>
-      <DashboardHeader heading="Email Templates" text="Customize email templates for your white-labeled platform." />
+      {/* Removed heading and text props as DashboardHeader derives title from path */}
+      <DashboardHeader />
       <div className="grid gap-8">
         <WhiteLabelNav />
 
@@ -41,11 +42,11 @@ export default function WhiteLabelTemplatesPage() {
                 <div className="space-y-2">
                   <h3 className="text-sm font-medium">Available Variables</h3>
                   <div className="text-sm text-muted-foreground space-y-1">
-                    <p>{{ client_name }} - The client's name</p>
-                    <p>{{ company_name }} - Your company name</p>
-                    <p>{{ login_url }} - The URL where clients can log in</p>
-                    <p>{{ email }} - The client's email address</p>
-                    <p>{{ password }} - The client's temporary password</p>
+                    <p>{`{{ client_name }}`} - The client's name</p>
+                    <p>{`{{ company_name }}`} - Your company name</p>
+                    <p>{`{{ login_url }}`} - The URL where clients can log in</p>
+                    <p>{`{{ email }}`} - The client's email address</p>
+                    <p>{`{{ password }}`} - The client's temporary password</p>
                   </div>
                 </div>
                 <Button>Save Template</Button>
@@ -81,4 +82,3 @@ export default function WhiteLabelTemplatesPage() {
     </DashboardShell>
   )
 }
-

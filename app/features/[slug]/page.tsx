@@ -177,26 +177,3 @@ export default function FeatureDetailPage() {
     </div>
   );
 }
-
-// Add metadata function for better SEO
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const slug = params.slug;
-  const feature = featureDetails[slug];
-  
-  if (!feature) {
-    return {
-      title: 'Feature Not Found',
-      description: 'The feature you are looking for could not be found.'
-    };
-  }
-  
-  return {
-    title: `${feature.title} - HostsHub Feature`,
-    description: feature.description,
-    openGraph: {
-      title: feature.title,
-      description: feature.description,
-      type: 'website'
-    }
-  };
-}

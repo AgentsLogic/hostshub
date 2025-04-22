@@ -251,32 +251,3 @@ export default function BlogArticlePage({ params }: BlogArticlePageProps) {
     </div>
   );
 }
-
-// Generate metadata for the page
-export function generateMetadata({ params }: BlogArticlePageProps) {
-  const post = blogPosts.find((p) => p.slug === params.slug);
-  
-  if (!post) {
-    return {
-      title: 'Post Not Found',
-      description: 'The requested blog post could not be found.'
-    };
-  }
-
-  return {
-    title: `${post.title} | HostsHub Blog`,
-    description: post.excerpt,
-    openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      images: [post.image],
-      type: 'article'
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: post.title,
-      description: post.excerpt,
-      images: [post.image]
-    }
-  };
-}

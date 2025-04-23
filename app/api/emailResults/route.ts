@@ -1,13 +1,12 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
-import { marked } from 'marked';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   try {
     const { email, content } = await request.json();
-
+    
     if (!email || !content) {
       return NextResponse.json(
         { error: 'Email and content are required' },
@@ -15,40 +14,31 @@ export async function POST(request: Request) {
       );
     }
 
-    // Convert Markdown content to HTML for the email body
-    const htmlContent = marked(content);
-
     const { data, error } = await resend.emails.send({
-      from: 'Findr <mail@hostshub.ai>', // Replace with your verified domain
+      from: 'Findr <findr@hostshub.ai>',
       to: email,
-      subject: 'Your Findr Report',
+      subject: 'Your Findr Search Results',
       html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <style>
-            body { font-family: sans-serif; line-height: 1.6; }
-            h1, h2, h3 { color: #007bff; margin-top: 20px; margin-bottom: 10px; }
-            pre { background-color: #f4f4f4; padding: 10px; overflow-x: auto; }
-            code { font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace; }
-          </style>
-        </head>
-        <body>
-          ${htmlContent}
-        </body>
-        </html>
-      `,
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h1 style="color: #2563eb;">Your Findr Search Results</h1>
+          <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin-top: 20px;">
+            ${content.replace(/\n/g, '<br>')}
+          </div>
+          <p style="margin-top: 20px;">Thank you for using Findr!</p>
+        </div>
+      `
     });
 
     if (error) {
-      console.error('Error sending email:', error);
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json(
+        { error: error.message },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({ success: true, data });
-
   } catch (error) {
-    console.error('Error processing email request:', error);
+    console.error('Email sending error:', error);
     return NextResponse.json(
       { error: 'Failed to send email' },
       { status: 500 }

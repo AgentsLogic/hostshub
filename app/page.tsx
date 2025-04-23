@@ -34,7 +34,7 @@ export default function HomePage() {
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-16 items-center">
             <div className="flex flex-col justify-center space-y-6">
               <div className="space-y-4">
-                <h1 className="text-4xl font-extrabold tracking-tight sm:text-6xl xl:text-7xl text-primary">
+                <h1 className="text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl text-primary">
                   Automate Your Hosting, Simplify Your Success
                 </h1>
                 <p className="max-w-[600px] text-lg md:text-xl text-muted-foreground">
@@ -68,8 +68,8 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-        {/* Trust Badges/Logos Row - Temporarily hidden */}
-        {/* <div className="container px-4 md:px-6 mt-12">
+        {/* Trust Badges/Logos Row */}
+        <div className="container px-4 md:px-6 mt-12">
           <div className="flex flex-wrap justify-center items-center gap-8 opacity-80">
             <img src="/images/airbnb-logo.png" alt="Airbnb" className="h-8 w-auto grayscale hover:grayscale-0 transition" />
             <img src="/images/vrbo-logo.png" alt="VRBO" className="h-8 w-auto grayscale hover:grayscale-0 transition" />
@@ -77,7 +77,7 @@ export default function HomePage() {
             <img src="/images/expedia-logo.png" alt="Expedia" className="h-8 w-auto grayscale hover:grayscale-0 transition" />
             <img src="/images/tripadvisor-logo.png" alt="Tripadvisor" className="h-8 w-auto grayscale hover:grayscale-0 transition" />
           </div>
-        </div> */}
+        </div>
       </section>
 
       {/* Everything You Need */}
@@ -107,7 +107,7 @@ export default function HomePage() {
             ].map((feature, i) => (
               <div
                 key={i}
-                className="group flex flex-col gap-4 p-6 rounded-xl border bg-background transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden"
+                className="group flex flex-col gap-4 p-6 rounded-xl border bg-background transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden animate-fade-in-up"
               >
                 {/* Subtle gradient background that shows on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent-red/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -157,6 +157,27 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Mid-Page CTA Section */}
+      <section className="w-full py-12 md:py-20 lg:py-28 bg-primary text-primary-foreground">
+        <div className="container px-4 md:px-6 text-center space-y-6">
+          <h2 className="text-4xl font-extrabold tracking-tight md:text-5xl">Ready to simplify your hosting?</h2>
+          <p className="max-w-[800px] mx-auto text-lg md:text-xl">Join thousands of hosts who are automating their business and achieving greater success with HostsHub.ai.</p>
+          <div className="flex flex-col gap-3 sm:flex-row justify-center">
+            <Link href="/signup">
+              <Button size="lg" className="w-full sm:w-auto shadow-lg hover:scale-105 transition-transform duration-200 bg-primary-foreground text-primary hover:bg-primary-foreground/90">
+                Start Your Free Trial
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+            <Link href="#demo">
+              <Button size="lg" className="w-full sm:w-auto shadow-lg hover:scale-105 transition-transform duration-200 bg-accent-red text-accent-red-foreground hover:bg-accent-red/90">
+                See a Demo
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials Section */}
       <section className="relative w-full py-12 md:py-20 lg:py-28 overflow-hidden border-t">
         <div className="absolute inset-0 -z-10">
@@ -177,20 +198,34 @@ export default function HomePage() {
             {[
               {
                 quote: "HostsHub.ai automated 90% of my daily tasks. I finally have time to focus on growing my business.",
-                name: "Sarah, Superhost in Austin"
+                name: "Sarah, Superhost in Austin",
+                image: "/images/placeholder-user.jpg" // Replace with actual image path
               },
               {
                 quote: "Dynamic pricing boosted my revenue by 30% in just a few months. It's a game changer.",
-                name: "James, Property Manager in Miami"
+                name: "James, Property Manager in Miami",
+                image: "/images/placeholder-user.jpg" // Replace with actual image path
               },
               {
                 quote: "The platform is so easy to use. I set it up in a day and it runs everything for me.",
-                name: "Lena, Boutique Hotel Owner"
+                name: "Lena, Boutique Hotel Owner",
+                image: "/images/placeholder-user.jpg" // Replace with actual image path
               }
             ].map((t, i) => (
               <div key={i} className="flex flex-col gap-4 p-6 rounded-xl border shadow-md bg-muted/10 hover:shadow-lg transition-all duration-300">
-                <p className="text-muted-foreground">&ldquo;{t.quote}&rdquo;</p>
-                <p className="font-semibold">{t.name}</p>
+                <div className="flex items-center gap-4">
+                  <Image
+                    src={t.image}
+                    alt={t.name}
+                    width={56}
+                    height={56}
+                    className="rounded-full object-cover"
+                  />
+                  <div className="flex flex-col">
+                    <p className="text-muted-foreground">&ldquo;{t.quote}&rdquo;</p>
+                    <p className="font-semibold mt-2">{t.name}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

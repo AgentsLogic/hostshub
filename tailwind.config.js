@@ -111,6 +111,9 @@ module.exports = {
         "blob": "blob 7s infinite",
         "gradient-x": "gradient-x 15s ease infinite",
       },
+      fontFamily: {
+        sans: ['"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+      },
     },
   },
   plugins: [

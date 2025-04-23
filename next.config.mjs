@@ -31,6 +31,10 @@ const nextConfig = {
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
   },
+  // Expose environment variables
+  env: {
+    DEEPSEEK_API_KEY: process.env.DEEPSEEK_API_KEY,
+  }
 }
 
 export default nextConfig

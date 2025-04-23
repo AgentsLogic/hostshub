@@ -1,7 +1,10 @@
 "use client";
 import { useState } from "react";
+// Removed duplicate useState import
 import { DashboardShell } from "@/components/dashboard-shell";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge"; // Import Badge
+import { cn } from "@/lib/utils"; // Import cn
 
 type Role = "Admin" | "Manager" | "Viewer";
 type Status = "Active" | "Invited";
@@ -79,11 +82,12 @@ export default function TeamPage() {
             />
           </div>
           <div>
-            <label className="block text-xs font-medium mb-1">Role</label>
+            <label className="block text-xs font-medium mb-1" id="invite-role-label">Role</label> {/* Added id for aria-labelledby */}
             <select
               className="border rounded px-2 py-1 text-sm"
               value={inviteRole}
               onChange={e => setInviteRole(e.target.value as Role)}
+              aria-labelledby="invite-role-label" // Added aria-labelledby
             >
               <option value="Admin">Admin</option>
               <option value="Manager">Manager</option>
@@ -94,36 +98,49 @@ export default function TeamPage() {
         </form>
       </div>
 
+      {/* Adjusted table container and table styling */}
       <div className="overflow-x-auto rounded border">
         <table className="min-w-full text-sm">
-          <thead className="bg-muted">
+          <thead className="bg-muted/50"> {/* Slightly lighter head */}
             <tr>
-              <th className="px-4 py-2 text-left font-semibold">Name</th>
-              <th className="px-4 py-2 text-left font-semibold">Email</th>
-              <th className="px-4 py-2 text-left font-semibold">Role</th>
-              <th className="px-4 py-2 text-left font-semibold">Status</th>
-              <th className="px-4 py-2"></th>
+              <th className="px-3 py-2 text-left font-semibold">Name</th> {/* Adjusted padding */}
+              <th className="px-3 py-2 text-left font-semibold">Email</th> {/* Adjusted padding */}
+              <th className="px-3 py-2 text-left font-semibold">Role</th> {/* Adjusted padding */}
+              <th className="px-3 py-2 text-left font-semibold">Status</th> {/* Adjusted padding */}
+              <th className="px-3 py-2"></th> {/* Adjusted padding */}
             </tr>
           </thead>
           <tbody>
-            {members.map(member => (
-              <tr key={member.id} className="border-t">
-                <td className="px-4 py-2">{member.name}</td>
-                <td className="px-4 py-2">{member.email}</td>
-                <td className="px-4 py-2">
+            {members.map((member, index) => (
+              <tr key={member.id} className={cn("border-t", index % 2 === 0 ? "" : "bg-muted/20")}> {/* Alternating rows */}
+                <td className="px-3 py-1.5">{member.name}</td> {/* Adjusted padding */}
+                <td className="px-3 py-1.5">{member.email}</td> {/* Adjusted padding */}
+                <td className="px-3 py-1.5"> {/* Adjusted padding */}
                   <select
-                    className="border rounded px-2 py-1"
+                    className="border rounded px-2 py-1 text-sm bg-background" /* Added bg */
                     value={member.role}
                     onChange={e => handleRoleChange(member.id, e.target.value as Role)}
                     disabled={member.status !== "Active"}
+                    aria-label={`Role for ${member.name}`} // Added aria-label
                   >
                     <option value="Admin">Admin</option>
                     <option value="Manager">Manager</option>
                     <option value="Viewer">Viewer</option>
                   </select>
                 </td>
-                <td className="px-4 py-2">{member.status}</td>
-                <td className="px-4 py-2 text-right">
+                <td className="px-3 py-1.5">{/* Adjusted padding */}
+                  {member.status === "Active" ? (
+                    <Badge variant="default">{member.status}</Badge>
+                  ) : (
+                    <Badge
+                      variant="outline"
+                      className="border-orange-400 text-orange-500 dark:border-orange-600 dark:text-orange-500"
+                    >
+                      {member.status}
+                    </Badge>
+                  )}
+                </td>
+                <td className="px-3 py-1.5 text-right"> {/* Adjusted padding */}
                   {member.status === "Active" && (
                     <Button
                       variant="destructive"
@@ -133,9 +150,7 @@ export default function TeamPage() {
                       Remove
                     </Button>
                   )}
-                  {member.status === "Invited" && (
-                    <span className="text-muted-foreground text-xs">Pending</span>
-                  )}
+                  {/* Removed plain text pending status, handled by Badge above */}
                 </td>
               </tr>
             ))}
@@ -148,17 +163,17 @@ export default function TeamPage() {
           <h2 className="text-lg font-semibold mb-2">Pending Invites</h2>
           <div className="overflow-x-auto rounded border">
             <table className="min-w-full text-sm">
-              <thead className="bg-muted">
+              <thead className="bg-muted/50"> {/* Slightly lighter head */}
                 <tr>
-                  <th className="px-4 py-2 text-left font-semibold">Email</th>
-                  <th className="px-4 py-2"></th>
+                  <th className="px-3 py-2 text-left font-semibold">Email</th> {/* Adjusted padding */}
+                  <th className="px-3 py-2"></th> {/* Adjusted padding */}
                 </tr>
               </thead>
               <tbody>
-                {invites.map(invite => (
-                  <tr key={invite.id} className="border-t">
-                    <td className="px-4 py-2">{invite.email}</td>
-                    <td className="px-4 py-2 text-right flex gap-2">
+                {invites.map((invite, index) => ( // Added index
+                  <tr key={invite.id} className={cn("border-t", index % 2 === 0 ? "" : "bg-muted/20")}> {/* Alternating rows */}
+                    <td className="px-3 py-1.5">{invite.email}</td> {/* Adjusted padding */}
+                    <td className="px-3 py-1.5 text-right flex gap-2"> {/* Adjusted padding */}
                       <Button
                         size="sm"
                         variant="outline"

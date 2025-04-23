@@ -21,16 +21,6 @@ import {
 
 const navItems = [
   {
-    title: "Properties",
-    href: "/dashboard/properties",
-    icon: <Home className="h-4 w-4" />,
-  },
-  {
-    title: "Websites",
-    href: "/dashboard/websites",
-    icon: <Globe className="h-4 w-4" />,
-  },
-  {
     title: "Channel Manager",
     href: "/dashboard/channel-manager",
     icon: <LayoutGrid className="h-4 w-4" />,
@@ -119,5 +109,3 @@ export function DashboardNav() {
     </nav>
   )
 }
-
-

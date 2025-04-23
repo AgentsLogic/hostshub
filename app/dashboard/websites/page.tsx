@@ -85,16 +85,16 @@ export default function WebsitesPage() {
         </Link>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"> {/* Adjusted gap */}
         {features.map((feature, i) => ( // Added index 'i'
-          <Card key={feature.title} className="p-6 transition-colors duration-300 hover:bg-muted/50">
+          <Card key={feature.title} className="p-4 border transition-colors duration-300 hover:bg-muted/50"> {/* Added border, adjusted padding */}
             {/* Alternate icon colors: red (even index) and blue (odd index) */}
-            <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-lg ${
+            <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-lg ${ /* Adjusted size/margin */
               i % 2 === 0 ? 'bg-accent-red/10 text-accent-red' : 'bg-primary/10 text-primary'
             }`}>
               {feature.icon}
             </div>
-            <h3 className="mb-2 text-lg font-medium">{feature.title}</h3>
+            <h3 className="mb-1 text-md font-medium">{feature.title}</h3> {/* Adjusted size/margin */}
             <p className="text-sm text-muted-foreground">
               {feature.description}
             </p>
@@ -104,9 +104,9 @@ export default function WebsitesPage() {
 
       <div>
         <h2 className="mb-6 text-2xl font-semibold">Website Templates</h2>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"> {/* Adjusted gap */}
           {templates.map((template) => (
-            <Card key={template.name} className="group overflow-hidden">
+            <Card key={template.name} className="group overflow-hidden border"> {/* Added border */}
               <div className={`relative aspect-video ${template.color} ${template.pattern} ${template.patternSize}`}>
                 <div className="absolute inset-0 flex items-center justify-center">
                   {template.icon}
@@ -122,7 +122,7 @@ export default function WebsitesPage() {
                   </Button>
                 </div>
               </div>
-              <div className="p-4">
+              <div className="p-3"> {/* Adjusted padding */}
                 <h3 className="font-medium">{template.name}</h3>
                 <p className="text-sm text-muted-foreground">
                   {template.description}

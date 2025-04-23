@@ -22,6 +22,7 @@ import {
   Activity
 } from "lucide-react"
 import Link from "next/link"
+import { cn } from "@/lib/utils" // Import cn
 
 // Mock channel data
 const channels = [
@@ -185,68 +186,68 @@ export default function ChannelManagerOverviewPage() {
       
       {/* Key Metrics Overview */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <Card className="border"> {/* Added border */}
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 pt-3 px-4"> {/* Adjusted padding */}
             <CardTitle className="text-sm font-medium">Connected Channels</CardTitle>
             <Activity className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-4 pb-3 pt-1"> {/* Adjusted padding */}
             <div className="text-2xl font-bold">{metrics.connectedChannels}/{metrics.totalChannels}</div>
             <p className="text-xs text-muted-foreground">
               {metrics.connectedChannels === metrics.totalChannels 
                 ? "All channels connected" 
                 : `${metrics.totalChannels - metrics.connectedChannels} channels disconnected`}
             </p>
-            <div className="mt-4">
+            <div className="mt-2"> {/* Adjusted margin */}
               <Progress value={(metrics.connectedChannels / metrics.totalChannels) * 100} className="h-2" />
             </div>
           </CardContent>
         </Card>
         
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <Card className="border"> {/* Added border */}
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 pt-3 px-4"> {/* Adjusted padding */}
             <CardTitle className="text-sm font-medium">Occupancy Rate</CardTitle>
             <BarChartIcon className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-4 pb-3 pt-1"> {/* Adjusted padding */}
             <div className="text-2xl font-bold">{metrics.averageOccupancy}%</div>
             <p className="text-xs text-muted-foreground">
               Across {metrics.totalProperties} properties
             </p>
-            <div className="mt-4">
+            <div className="mt-2"> {/* Adjusted margin */}
               <Progress value={metrics.averageOccupancy} className="h-2" />
             </div>
           </CardContent>
         </Card>
         
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <Card className="border"> {/* Added border */}
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 pt-3 px-4"> {/* Adjusted padding */}
             <CardTitle className="text-sm font-medium">Average Daily Rate</CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-4 pb-3 pt-1"> {/* Adjusted padding */}
             <div className="text-2xl font-bold">${metrics.averageADR}</div>
             <p className="text-xs text-muted-foreground">
               Weighted average across all channels
             </p>
-            <div className="mt-4 flex items-center space-x-2">
+            <div className="mt-2 flex items-center space-x-2"> {/* Adjusted margin */}
               <TrendingUp className="h-4 w-4 text-green-500" />
               <span className="text-xs text-green-500">+5.2% from last month</span>
             </div>
           </CardContent>
         </Card>
         
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <Card className="border"> {/* Added border */}
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 pt-3 px-4"> {/* Adjusted padding */}
             <CardTitle className="text-sm font-medium">RevPAR</CardTitle>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-4 pb-3 pt-1"> {/* Adjusted padding */}
             <div className="text-2xl font-bold">${metrics.averageRevPAR}</div>
             <p className="text-xs text-muted-foreground">
               Revenue per available room
             </p>
-            <div className="mt-4 flex items-center space-x-2">
+            <div className="mt-2 flex items-center space-x-2"> {/* Adjusted margin */}
               <TrendingUp className="h-4 w-4 text-green-500" />
               <span className="text-xs text-green-500">+3.8% from last month</span>
             </div>
@@ -254,37 +255,38 @@ export default function ChannelManagerOverviewPage() {
         </Card>
       </div>
       
+      
       {/* Channel Status Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {channels.map((channel) => (
-          <Card key={channel.id} className={`border ${channel.borderColor}`}>
-            <CardHeader className={`flex flex-row items-center justify-between space-y-0 pb-2 ${channel.bgColor}`}>
+          <Card key={channel.id} className={`border ${channel.borderColor}`}> {/* Base border already exists */}
+            <CardHeader className={`flex flex-row items-center justify-between space-y-0 pb-1 pt-3 px-4 ${channel.bgColor}`}> {/* Adjusted padding */}
               <div className="flex items-center space-x-2">
-                <div className="h-8 w-8 rounded-full overflow-hidden">
+                <div className="h-6 w-6 rounded-full overflow-hidden"> {/* Adjusted size */}
                   <img
                     src={channel.logo || "/placeholder.svg"}
                     alt={channel.name}
                     className="h-full w-full object-cover"
                   />
                 </div>
-                <CardTitle className={`text-base ${channel.color}`}>{channel.name}</CardTitle>
+                <CardTitle className={`text-base font-medium ${channel.color}`}>{channel.name}</CardTitle> {/* Added font-medium */}
               </div>
               <Badge variant={channel.status === "connected" ? "default" : "outline"}>
                 {channel.status}
               </Badge>
             </CardHeader>
-            <CardContent className="pt-4">
-              <div className="grid grid-cols-2 gap-2 text-sm">
+            <CardContent className="px-4 pb-3 pt-2"> {/* Adjusted padding */}
+              <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm"> {/* Adjusted gap */}
                 <div>
-                  <p className="font-medium">Properties</p>
-                  <p className="text-muted-foreground">{channel.properties}</p>
+                  <p className="font-medium text-muted-foreground text-xs">Properties</p> {/* Adjusted label */}
+                  <p>{channel.properties}</p>
                 </div>
                 <div>
-                  <p className="font-medium">Last Sync</p>
-                  <p className="text-muted-foreground">{channel.lastSync}</p>
+                  <p className="font-medium text-muted-foreground text-xs">Last Sync</p> {/* Adjusted label */}
+                  <p>{channel.lastSync}</p>
                 </div>
                 <div>
-                  <p className="font-medium">Sync Status</p>
+                  <p className="font-medium text-muted-foreground text-xs">Sync Status</p> {/* Adjusted label */}
                   <div className="flex items-center">
                     {channel.syncStatus === "success" && (
                       <Check className="mr-1 h-3 w-3 text-green-500" />
@@ -295,11 +297,11 @@ export default function ChannelManagerOverviewPage() {
                     {channel.syncStatus === "error" && (
                       <AlertCircle className="mr-1 h-3 w-3 text-red-500" />
                     )}
-                    <span className={
+                    <span className={cn("text-xs", // Smaller text
                       channel.syncStatus === "success" ? "text-green-500" :
                       channel.syncStatus === "warning" ? "text-amber-500" :
                       "text-red-500"
-                    }>
+                    )}>
                       {channel.syncStatus === "success" ? "OK" : 
                        channel.syncStatus === "warning" ? "Warning" : 
                        "Error"}
@@ -307,19 +309,19 @@ export default function ChannelManagerOverviewPage() {
                   </div>
                 </div>
                 <div>
-                  <p className="font-medium">Pending</p>
-                  <p className="text-muted-foreground">{channel.pendingBookings} bookings</p>
+                  <p className="font-medium text-muted-foreground text-xs">Pending</p> {/* Adjusted label */}
+                  <p>{channel.pendingBookings} bookings</p>
                 </div>
               </div>
               {channel.status === "connected" && (
-                <div className="mt-4 flex justify-between">
+                <div className="mt-3 flex justify-between"> {/* Adjusted margin */}
                   <Button variant="outline" size="sm" className="w-[48%]">
-                    <RefreshCw className="mr-2 h-3 w-3" />
+                    <RefreshCw className="mr-1.5 h-3 w-3" /> {/* Adjusted margin */}
                     Sync
                   </Button>
                   <Link href={`/dashboard/channel-manager/${channel.id}/settings`} className="w-[48%]">
                     <Button variant="outline" size="sm" className="w-full">
-                      <Settings className="mr-2 h-3 w-3" />
+                      <Settings className="mr-1.5 h-3 w-3" /> {/* Adjusted margin */}
                       Settings
                     </Button>
                   </Link>
@@ -334,17 +336,17 @@ export default function ChannelManagerOverviewPage() {
       <ChannelAnalytics timeRange={timeRange} />
       
       {/* Recent Sync Activity */}
-      <Card>
-        <CardHeader>
+      <Card className="border"> {/* Added border */}
+        <CardHeader className="px-4 pt-3 pb-2"> {/* Adjusted padding */}
           <CardTitle>Recent Sync Activity</CardTitle>
           <CardDescription>
             Latest synchronization events across all channels
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
+        <CardContent className="px-4 pb-3"> {/* Adjusted padding */}
+          <div className="space-y-3"> {/* Adjusted spacing */}
             {syncHistory.map((sync) => (
-              <div key={sync.id} className="flex items-start space-x-4 pb-4 border-b last:border-0">
+              <div key={sync.id} className="flex items-start space-x-3 pb-3 border-b last:border-0"> {/* Adjusted spacing/padding */}
                 <div className={`mt-0.5 h-4 w-4 rounded-full ${
                   sync.status === "success" ? "bg-green-500" :
                   sync.status === "warning" ? "bg-amber-500" :
@@ -377,17 +379,17 @@ export default function ChannelManagerOverviewPage() {
       </Card>
       
       {/* Booking Calendar Preview */}
-      <Card>
-        <CardHeader>
+      <Card className="border"> {/* Added border */}
+        <CardHeader className="px-4 pt-3 pb-2"> {/* Adjusted padding */}
           <CardTitle>Upcoming Bookings</CardTitle>
           <CardDescription>
             Next 7 days of bookings across all channels
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="flex items-center justify-center p-8 border rounded-md">
+        <CardContent className="p-4"> {/* Adjusted padding */}
+          <div className="flex items-center justify-center p-6 border rounded-md"> {/* Adjusted padding */}
             <div className="flex flex-col items-center space-y-2 text-center">
-              <Calendar className="h-12 w-12 text-muted-foreground" />
+              <Calendar className="h-10 w-10 text-muted-foreground" /> {/* Adjusted size */}
               <h3 className="text-lg font-medium">Booking Calendar</h3>
               <p className="text-sm text-muted-foreground max-w-md">
                 View and manage all your upcoming bookings in one place with our integrated calendar view.

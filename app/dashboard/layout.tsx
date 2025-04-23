@@ -38,7 +38,9 @@ export default function DashboardLayout({
             <NavLink href="/dashboard/websites" icon="Globe">Websites</NavLink>
             <NavLink href="/dashboard/channel-manager" icon="Layers">Channel Manager</NavLink>
             <NavLink href="/dashboard/bookings" icon="Calendar">Bookings</NavLink>
+            <NavLink href="/dashboard/check-in" icon="CalendarCheck">Check-in/out</NavLink>
             <NavLink href="/dashboard/communications" icon="MessageSquare">Communications</NavLink>
+            <NavLink href="/dashboard/maintenance" icon="Wrench">Maintenance</NavLink>
             <NavLink href="/dashboard/analytics" icon="BarChart">Analytics</NavLink>
             <NavLink href="/dashboard/financial" icon="DollarSign">Financial</NavLink>
             <NavLink href="/dashboard/smart-insights" icon="Lightbulb">Smart Insights</NavLink>
@@ -56,7 +58,6 @@ export default function DashboardLayout({
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="p-2 rounded-md border hover:bg-muted transition"
             aria-label="Toggle navigation"
-            aria-expanded={sidebarOpen}
           >
             <Menu className="h-6 w-6" />
           </button>

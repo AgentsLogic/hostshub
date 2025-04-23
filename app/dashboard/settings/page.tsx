@@ -24,12 +24,12 @@ export default function SettingsPage() {
           <TabsTrigger value="advanced">Advanced</TabsTrigger>
         </TabsList>
         <TabsContent value="profile" className="space-y-4">
-          <Card>
-            <CardHeader>
+          <Card className="border"> {/* Added border */}
+            <CardHeader className="px-4 pt-3 pb-2"> {/* Adjusted padding */}
               <CardTitle>Profile Information</CardTitle>
               <CardDescription>Update your personal information</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 px-4 pb-3"> {/* Adjusted padding */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="first-name">First Name</Label>
@@ -53,17 +53,17 @@ export default function SettingsPage() {
                 <Textarea id="bio" placeholder="Tell us about yourself" />
               </div>
             </CardContent>
-            <CardFooter>
+            <CardFooter className="px-4 pb-3"> {/* Adjusted padding */}
               <Button>Save Changes</Button>
             </CardFooter>
           </Card>
 
-          <Card>
-            <CardHeader>
+          <Card className="border"> {/* Added border */}
+            <CardHeader className="px-4 pt-3 pb-2"> {/* Adjusted padding */}
               <CardTitle>Password</CardTitle>
               <CardDescription>Update your password</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 px-4 pb-3"> {/* Adjusted padding */}
               <div className="space-y-2">
                 <Label htmlFor="current-password">Current Password</Label>
                 <Input id="current-password" type="password" />
@@ -77,18 +77,18 @@ export default function SettingsPage() {
                 <Input id="confirm-password" type="password" />
               </div>
             </CardContent>
-            <CardFooter>
+            <CardFooter className="px-4 pb-3"> {/* Adjusted padding */}
               <Button>Update Password</Button>
             </CardFooter>
           </Card>
         </TabsContent>
         <TabsContent value="notifications" className="space-y-4">
-          <Card>
-            <CardHeader>
+          <Card className="border"> {/* Added border */}
+            <CardHeader className="px-4 pt-3 pb-2"> {/* Adjusted padding */}
               <CardTitle>Notification Preferences</CardTitle>
               <CardDescription>Choose how you want to be notified</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 px-4 pb-3"> {/* Adjusted padding */}
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-medium">New Bookings</p>
@@ -154,18 +154,18 @@ export default function SettingsPage() {
                 </div>
               </div>
             </CardContent>
-            <CardFooter>
+            <CardFooter className="px-4 pb-3"> {/* Adjusted padding */}
               <Button>Save Preferences</Button>
             </CardFooter>
           </Card>
         </TabsContent>
         <TabsContent value="appearance" className="space-y-4">
-          <Card>
-            <CardHeader>
+          <Card className="border"> {/* Added border */}
+            <CardHeader className="px-4 pt-3 pb-2"> {/* Adjusted padding */}
               <CardTitle>Appearance</CardTitle>
               <CardDescription>Customize the look and feel of your dashboard</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 px-4 pb-3"> {/* Adjusted padding */}
               <div className="space-y-2">
                 <Label htmlFor="theme">Theme</Label>
                 <Select defaultValue="light">
@@ -200,18 +200,18 @@ export default function SettingsPage() {
                 <Switch id="animations" defaultChecked />
               </div>
             </CardContent>
-            <CardFooter>
+            <CardFooter className="px-4 pb-3"> {/* Adjusted padding */}
               <Button>Save Preferences</Button>
             </CardFooter>
           </Card>
         </TabsContent>
         <TabsContent value="advanced" className="space-y-4">
-          <Card>
-            <CardHeader>
+          <Card className="border"> {/* Added border */}
+            <CardHeader className="px-4 pt-3 pb-2"> {/* Adjusted padding */}
               <CardTitle>Advanced Settings</CardTitle>
               <CardDescription>Configure advanced settings for your account</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 px-4 pb-3"> {/* Adjusted padding */}
               <div className="space-y-2">
                 <Label htmlFor="language">Language</Label>
                 <Select defaultValue="en">
@@ -276,7 +276,7 @@ export default function SettingsPage() {
                 <Button variant="destructive">Delete Account</Button>
               </div>
             </CardContent>
-            <CardFooter>
+            <CardFooter className="px-4 pb-3"> {/* Adjusted padding */}
               <Button>Save Settings</Button>
             </CardFooter>
           </Card>
@@ -285,4 +285,3 @@ export default function SettingsPage() {
     </DashboardShell>
   )
 }
-

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { UserPlus, Search } from "lucide-react";
+import { cn } from "@/lib/utils"; // Import cn
 
 export default function GuestsPage() {
   // Placeholder guest data
@@ -35,24 +36,24 @@ export default function GuestsPage() {
           <CardHeader>
             <CardTitle>Guest List</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-0"> {/* Remove card content padding */}
             <div className="overflow-x-auto">
               <table className="min-w-full text-sm">
-                <thead>
+                <thead className="bg-muted/50"> {/* Lighter head */}
                   <tr className="border-b">
-                    <th className="text-left py-2 px-4 font-medium">Name</th>
-                    <th className="text-left py-2 px-4 font-medium">Email</th>
-                    <th className="text-left py-2 px-4 font-medium">Bookings</th>
-                    <th className="text-left py-2 px-4 font-medium">Last Stay</th>
+                    <th className="text-left px-3 py-2 font-semibold">Name</th> {/* Adjusted padding */}
+                    <th className="text-left px-3 py-2 font-semibold">Email</th> {/* Adjusted padding */}
+                    <th className="text-left px-3 py-2 font-semibold">Bookings</th> {/* Adjusted padding */}
+                    <th className="text-left px-3 py-2 font-semibold">Last Stay</th> {/* Adjusted padding */}
                   </tr>
                 </thead>
                 <tbody>
-                  {guests.map((guest) => (
-                    <tr key={guest.email} className="border-b hover:bg-muted/50">
-                      <td className="py-2 px-4">{guest.name}</td>
-                      <td className="py-2 px-4">{guest.email}</td>
-                      <td className="py-2 px-4">{guest.bookings}</td>
-                      <td className="py-2 px-4">{guest.lastStay}</td>
+                  {guests.map((guest, index) => ( // Added index
+                    <tr key={guest.email} className={cn("border-b", index % 2 === 0 ? "" : "bg-muted/20")}> {/* Alternating rows */}
+                      <td className="px-3 py-1.5">{guest.name}</td> {/* Adjusted padding */}
+                      <td className="px-3 py-1.5">{guest.email}</td> {/* Adjusted padding */}
+                      <td className="px-3 py-1.5">{guest.bookings}</td> {/* Adjusted padding */}
+                      <td className="px-3 py-1.5">{guest.lastStay}</td> {/* Adjusted padding */}
                     </tr>
                   ))}
                 </tbody>

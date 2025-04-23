@@ -11,38 +11,38 @@ export default function AnalyticsPage() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <Card className="border"> {/* Added border */}
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 pt-3 px-4"> {/* Adjusted padding */}
             <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-4 pb-3 pt-1"> {/* Adjusted padding */}
             <div className="text-2xl font-bold">$24,780</div>
             <p className="text-xs text-muted-foreground">+12.5% from last month</p>
           </CardContent>
         </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <Card className="border"> {/* Added border */}
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 pt-3 px-4"> {/* Adjusted padding */}
             <CardTitle className="text-sm font-medium">Bookings</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-4 pb-3 pt-1"> {/* Adjusted padding */}
             <div className="text-2xl font-bold">48</div>
             <p className="text-xs text-muted-foreground">+8.2% from last month</p>
           </CardContent>
         </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <Card className="border"> {/* Added border */}
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 pt-3 px-4"> {/* Adjusted padding */}
             <CardTitle className="text-sm font-medium">Occupancy Rate</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-4 pb-3 pt-1"> {/* Adjusted padding */}
             <div className="text-2xl font-bold">78%</div>
             <p className="text-xs text-muted-foreground">+5.1% from last month</p>
           </CardContent>
         </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <Card className="border"> {/* Added border */}
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 pt-3 px-4"> {/* Adjusted padding */}
             <CardTitle className="text-sm font-medium">Average Rating</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-4 pb-3 pt-1"> {/* Adjusted padding */}
             <div className="text-2xl font-bold">4.8/5</div>
             <p className="text-xs text-muted-foreground">+0.2 from last month</p>
           </CardContent>
@@ -56,34 +56,34 @@ export default function AnalyticsPage() {
           <TabsTrigger value="properties">Properties</TabsTrigger>
         </TabsList>
         <TabsContent value="revenue">
-          <Card>
-            <CardHeader>
+          <Card className="border"> {/* Added border */}
+            <CardHeader className="px-4 pt-3 pb-2"> {/* Adjusted padding */}
               <CardTitle>Revenue Overview</CardTitle>
               <CardDescription>Monthly revenue for the past year</CardDescription>
             </CardHeader>
-            <CardContent className="h-[400px] flex items-center justify-center">
+            <CardContent className="h-[400px] flex items-center justify-center p-4"> {/* Adjusted padding */}
               <p className="text-muted-foreground">Revenue chart will be displayed here</p>
             </CardContent>
           </Card>
         </TabsContent>
         <TabsContent value="bookings">
-          <Card>
-            <CardHeader>
+          <Card className="border"> {/* Added border */}
+            <CardHeader className="px-4 pt-3 pb-2"> {/* Adjusted padding */}
               <CardTitle>Booking Analysis</CardTitle>
               <CardDescription>Revenue vs. expenses for the past year</CardDescription>
             </CardHeader>
-            <CardContent className="h-[400px] flex items-center justify-center">
+            <CardContent className="h-[400px] flex items-center justify-center p-4"> {/* Adjusted padding */}
               <p className="text-muted-foreground">Booking chart will be displayed here</p>
             </CardContent>
           </Card>
         </TabsContent>
         <TabsContent value="properties">
-          <Card>
-            <CardHeader>
+          <Card className="border"> {/* Added border */}
+            <CardHeader className="px-4 pt-3 pb-2"> {/* Adjusted padding */}
               <CardTitle>Property Distribution</CardTitle>
               <CardDescription>Revenue distribution by property</CardDescription>
             </CardHeader>
-            <CardContent className="h-[400px] flex items-center justify-center">
+            <CardContent className="h-[400px] flex items-center justify-center p-4"> {/* Adjusted padding */}
               <p className="text-muted-foreground">Property distribution chart will be displayed here</p>
             </CardContent>
           </Card>
@@ -92,4 +92,3 @@ export default function AnalyticsPage() {
     </DashboardShell>
   )
 }
-

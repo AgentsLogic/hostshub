@@ -1,4 +1,5 @@
 import { Message } from "@/lib/types";
+import { cn } from "@/lib/utils"; // Import cn
 
 interface MessageListProps {
   messages: Message[];
@@ -13,15 +14,16 @@ export function MessageList({ messages, currentUserId }: MessageListProps) {
         return (
           <div
             key={msg.id}
-            className={`max-w-[75%] rounded-lg px-3 py-2 ${
+            className={cn( // Use cn for conditional classes
+              "max-w-[75%] rounded-lg px-3 py-1.5 border", // Adjusted padding, added border
               isOwn
                 ? "ml-auto bg-primary text-primary-foreground"
                 : "mr-auto bg-muted text-foreground"
-            }`}
+            )}
           >
             <div className="text-sm whitespace-pre-wrap">{msg.content}</div>
-            <div className="text-xs mt-1 text-muted-foreground text-right">
-              {new Date(msg.created_at).toLocaleTimeString()}
+            <div className="text-xs mt-0.5 text-muted-foreground/80 text-right"> {/* Adjusted margin and opacity */}
+              {new Date(msg.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} {/* Formatted time */}
             </div>
           </div>
         );

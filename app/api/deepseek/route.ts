@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
+export const maxDuration = 300; // 5 minutes in seconds
+
 export async function POST(req: NextRequest) {
+  const startTime = Date.now();
+  console.log('Deepseek API request started');
   try {
     const body = await req.json();
 
@@ -47,7 +51,16 @@ Provide detailed suggestions with estimated ROI and reasons why these properties
       { role: "user", content: initialPrompt }
     ];
 
+    console.log('Starting Deepseek API request with timeout:', 300000);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => {
+      console.log('Timeout triggered - aborting request');
+      controller.abort();
+    }, 300000); // 300 seconds
+    
     const response = await fetch("https://api.deepseek.com/v1/chat/completions", {
+      signal: controller.signal,
+      keepalive: true,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,15 +74,42 @@ Provide detailed suggestions with estimated ROI and reasons why these properties
       })
     });
 
+    clearTimeout(timeoutId);
+    
     if (!response.ok) {
       const error = await response.text();
-      return NextResponse.json({ error }, { status: response.status });
+      console.error('Deepseek API response error:', {
+        status: response.status,
+        error: error,
+        headers: Object.fromEntries(response.headers.entries())
+      });
+      return NextResponse.json({ 
+        error: "API request failed",
+        details: error,
+        status: response.status 
+      }, { status: response.status });
     }
 
     const data = await response.json();
+    console.log(`Deepseek API request completed in ${Date.now() - startTime}ms`);
     return NextResponse.json({ result: data });
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    console.error('Deepseek API error:', error);
+    if (error instanceof Error && error.name === 'AbortError') {
+      const duration = Date.now() - startTime;
+      console.log(`Deepseek API request timed out after ${duration}ms`);
+      return NextResponse.json(
+        { 
+          error: "Request timed out",
+          duration: duration,
+          timeoutMs: 300000
+        }, 
+        { status: 504 }
+      );
+    }
+    return NextResponse.json(
+      { error: "Internal server error" }, 
+      { status: 500 }
+    );
   }
 }

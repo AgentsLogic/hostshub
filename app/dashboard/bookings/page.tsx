@@ -2,9 +2,10 @@ import { DashboardShell } from "@/app/dashboard/components/dashboard-shell"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Calendar, Plus, Filter } from "lucide-react"
+import { Calendar, Plus, Filter, Users, DollarSign } from "lucide-react" // Added Users, DollarSign
 import Link from "next/link"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { cn } from "@/lib/utils" // Added cn import
 
 // Mock bookings data
 const bookings = [
@@ -82,8 +83,8 @@ export default function BookingsPage() {
           {bookings
             .filter((b) => b.status !== "cancelled")
             .map((booking) => (
-              <Card key={booking.id}>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <Card key={booking.id} className="border"> {/* Added border */}
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 pt-4"> {/* Adjusted pt */}
                   <div>
                     <CardTitle className="text-lg">{booking.guest}</CardTitle>
                     <p className="text-sm text-muted-foreground">{booking.property}</p>
@@ -91,41 +92,50 @@ export default function BookingsPage() {
                   <Badge
                     variant={
                       booking.status === "confirmed"
-                        ? "default"
+                        ? "default" // Confirmed
                         : booking.status === "pending"
-                          ? "outline"
-                          : "destructive"
+                          ? "outline" // Keep outline but add color class below
+                          : "destructive" // Cancelled
                     }
+                    className={cn(
+                      booking.status === "pending" && "border-orange-400 text-orange-500 dark:border-orange-600 dark:text-orange-500" // Added color for pending
+                    )}
                   >
                     {booking.status}
                   </Badge>
                 </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-2 gap-4">
+                <CardContent className="pt-2 pb-4"> {/* Adjusted padding */}
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-2"> {/* Adjusted gap */}
                     <div>
-                      <p className="text-sm font-medium">Check-in</p>
+                      <p className="text-sm font-medium text-muted-foreground">Check-in</p> {/* Lighter label */}
                       <div className="flex items-center">
                         <Calendar className="mr-2 h-4 w-4 text-muted-foreground" />
                         <p className="text-sm">{booking.checkIn}</p>
                       </div>
                     </div>
                     <div>
-                      <p className="text-sm font-medium">Check-out</p>
+                      <p className="text-sm font-medium text-muted-foreground">Check-out</p> {/* Lighter label */}
                       <div className="flex items-center">
                         <Calendar className="mr-2 h-4 w-4 text-muted-foreground" />
                         <p className="text-sm">{booking.checkOut}</p>
                       </div>
                     </div>
                     <div>
-                      <p className="text-sm font-medium">Guests</p>
-                      <p className="text-sm">{booking.guests}</p>
+                      <p className="text-sm font-medium text-muted-foreground">Guests</p> {/* Lighter label */}
+                      <div className="flex items-center">
+                        <Users className="mr-2 h-4 w-4 text-muted-foreground" /> {/* Added icon */}
+                        <p className="text-sm">{booking.guests}</p>
+                      </div>
                     </div>
                     <div>
-                      <p className="text-sm font-medium">Total</p>
-                      <p className="text-sm">${booking.total}</p>
+                      <p className="text-sm font-medium text-muted-foreground">Total</p> {/* Lighter label */}
+                      <div className="flex items-center">
+                        <DollarSign className="mr-2 h-4 w-4 text-muted-foreground" /> {/* Added icon */}
+                        <p className="text-sm">${booking.total}</p>
+                      </div>
                     </div>
                   </div>
-                  <div className="mt-4 flex justify-end space-x-2">
+                  <div className="mt-3 flex justify-end space-x-2"> {/* Adjusted margin */}
                     <Link href={`/dashboard/bookings/${booking.id}`}>
                       <Button variant="outline" size="sm">
                         View Details
@@ -146,4 +156,3 @@ export default function BookingsPage() {
     </DashboardShell>
   )
 }
-

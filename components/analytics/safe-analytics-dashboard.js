@@ -24,6 +24,10 @@ const bookingsData = [
 ]
 
 export function SafeAnalyticsDashboard() {
+  // Ensure we have valid data before rendering
+  const validRevenueData = revenueData?.length > 0 ? revenueData : []
+  const validBookingsData = bookingsData?.length > 0 ? bookingsData : []
+
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
       <div className="flex items-center justify-between space-y-2">
@@ -83,7 +87,7 @@ export function SafeAnalyticsDashboard() {
                 <CardTitle>Revenue Overview</CardTitle>
               </CardHeader>
               <CardContent className="pl-2">
-                <SafeLineChart data={revenueData} categories={["revenue"]} />
+                <SafeLineChart data={validRevenueData} categories={["revenue"]} />
               </CardContent>
             </Card>
             <Card className="col-span-3">
@@ -92,7 +96,7 @@ export function SafeAnalyticsDashboard() {
                 <CardDescription>Distribution of bookings across different platforms</CardDescription>
               </CardHeader>
               <CardContent>
-                <SafeBarChart data={bookingsData} categories={["value"]} />
+                <SafeBarChart data={validBookingsData} categories={["value"]} />
               </CardContent>
             </Card>
           </div>
@@ -104,7 +108,7 @@ export function SafeAnalyticsDashboard() {
               <CardDescription>Monthly booking patterns and seasonal trends</CardDescription>
             </CardHeader>
             <CardContent className="pl-2">
-              <SafeLineChart data={revenueData} categories={["revenue"]} />
+              <SafeLineChart data={validRevenueData} categories={["revenue"]} />
             </CardContent>
           </Card>
         </TabsContent>
@@ -115,7 +119,7 @@ export function SafeAnalyticsDashboard() {
               <CardDescription>Revenue by property type and location</CardDescription>
             </CardHeader>
             <CardContent className="pl-2">
-              <SafeBarChart data={bookingsData} categories={["value"]} />
+              <SafeBarChart data={validBookingsData} categories={["value"]} />
             </CardContent>
           </Card>
         </TabsContent>

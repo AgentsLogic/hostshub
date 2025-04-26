@@ -1,3 +1,5 @@
+"use client";
+
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -96,11 +98,6 @@ Learn how to:
 `
   }
 ];
-
-export const metadata = {
-  title: "Blog - HostsHub",
-  description: "Latest news, guides, and updates for vacation rental hosts."
-};
 
 // Placeholder comments data
 const initialComments = [
@@ -254,33 +251,4 @@ export default function BlogArticlePage({ params }: BlogArticlePageProps) {
       </div>
     </div>
   );
-}
-
-// Generate metadata for SEO
-export function generateMetadata({ params }: BlogArticlePageProps) {
-  const post = blogPosts.find((p) => p.slug === params.slug);
-  
-  if (!post) {
-    return {
-      title: 'Post Not Found',
-      description: 'The requested blog post could not be found.'
-    };
-  }
-
-  return {
-    title: `${post.title} | HostsHub Blog`,
-    description: post.excerpt,
-    openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      images: [post.image],
-      type: 'article'
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: post.title,
-      description: post.excerpt,
-      images: [post.image]
-    }
-  };
 }

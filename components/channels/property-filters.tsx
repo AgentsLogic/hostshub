@@ -141,8 +141,9 @@ export function PropertyFilters({
     if (filters.amenities.length > 0) count++
     if (filters.status !== 'all') count++
     
-    setActiveFiltersCount(count)
-  }, [filters])
+    setActiveFiltersCount(count);
+  // Add filters to dependency array
+  }, [filters]);
   
   const updateFilters = (partialFilters: Partial<PropertyFilterValues>) => {
     const updatedFilters = { ...filters, ...partialFilters }

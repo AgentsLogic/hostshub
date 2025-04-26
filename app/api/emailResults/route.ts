@@ -5,7 +5,8 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   try {
-    const { email, content } = await request.json();
+    const body = await request.text();
+    const { email, content } = JSON.parse(body);
     
     if (!email || !content) {
       return NextResponse.json(
@@ -14,8 +15,16 @@ export async function POST(request: Request) {
       );
     }
 
+    if (!process.env.RESEND_API_KEY) {
+      console.error('RESEND_API_KEY is not set');
+      return NextResponse.json(
+        { error: 'Email service is not configured' },
+        { status: 500 }
+      );
+    }
+
     const { data, error } = await resend.emails.send({
-      from: 'Findr <findr@hostshub.ai>',
+      from: 'Findr <onboarding@resend.dev>',
       to: email,
       subject: 'Your Findr Search Results',
       html: `
@@ -29,7 +38,10 @@ export async function POST(request: Request) {
       `
     });
 
+    console.log('Resend response:', { data, error });
+
     if (error) {
+      console.error('Resend error:', error);
       return NextResponse.json(
         { error: error.message },
         { status: 500 }
@@ -40,7 +52,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Email sending error:', error);
     return NextResponse.json(
-      { error: 'Failed to send email' },
+      { error: 'Failed to send email. Please try again.' },
       { status: 500 }
     );
   }

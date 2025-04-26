@@ -179,7 +179,7 @@ export default function BookingCalendarPage() {
           <Button variant="outline" size="sm">
             Today
           </Button>
-          <Button variant="outline" size="icon" size="sm">
+          <Button variant="outline" size="icon">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -195,7 +195,7 @@ export default function BookingCalendarPage() {
               <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
           </Button>
-          <Button variant="outline" size="icon" size="sm">
+          <Button variant="outline" size="icon">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -276,12 +276,15 @@ export default function BookingCalendarPage() {
                     >
                       <div className="space-y-2 mb-4 md:mb-0">
                         <div className="flex items-center gap-2">
-                          <h3 className="font-medium">{booking.property.name}</h3>
+                          {/* Add null check for property */}
+                          <h3 className="font-medium">{booking.property?.name || "Unknown Property"}</h3>
                           {getStatusBadge(booking.status)}
+                          {/* Channel is already handled with optional chaining */}
                           {getPlatformBadge(booking.channel?.name || "Direct")}
                         </div>
                         <p className="text-sm">
-                          {booking.guest.first_name} {booking.guest.last_name}
+                          {/* Add null check for guest */}
+                          {booking.guest?.first_name || "Unknown"} {booking.guest?.last_name || "Guest"}
                         </p>
                         <div className="flex items-center gap-4 text-sm text-muted-foreground">
                           <div className="flex items-center gap-1">
@@ -293,7 +296,8 @@ export default function BookingCalendarPage() {
                           </div>
                           <div className="flex items-center gap-1">
                             <Users className="h-4 w-4" />
-                            <span>{booking.guests} guests</span>
+                            {/* Calculate total guests */}
+                            <span>{booking.adults + booking.children + booking.infants} guests</span>
                           </div>
                           <div className="flex items-center gap-1">
                             <Clock className="h-4 w-4" />
@@ -396,4 +400,3 @@ export default function BookingCalendarPage() {
     </DashboardShell>
   )
 }
-

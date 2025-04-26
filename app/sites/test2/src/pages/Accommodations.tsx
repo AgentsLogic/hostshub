@@ -9,13 +9,16 @@ interface AccommodationsProps {
 }
 
 export const Accommodations = ({ propertyData }: AccommodationsProps) => {
+  // Handle cases where propertyData is null or name is missing
+  const propertyName = propertyData?.name || "Our Accommodations";
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h1 className="text-4xl font-serif text-gray-900 mb-8">Accommodations at {propertyData.name}</h1>
+      <h1 className="text-4xl font-serif text-gray-900 mb-8">Accommodations at {propertyName}</h1>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         <div>
           <img
-            src="assets/images/gallery01/670274ff.jpg"
+            src="/assets/images/gallery01/670274ff.jpg"
             alt="Master Bedroom"
             className="w-full h-96 object-cover rounded-lg mb-6"
           />

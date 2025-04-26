@@ -15,7 +15,6 @@ import {
 } from "recharts"
 import { cn } from "@/lib/utils"
 
-// Sample data to use when no data is provided
 const sampleData = [
   { name: "Jan", value: 400 },
   { name: "Feb", value: 300 },
@@ -25,7 +24,6 @@ const sampleData = [
   { name: "Jun", value: 600 },
 ]
 
-// Define proper types for the tooltip props
 function ChartTooltipContent({
   active,
   payload,
@@ -35,9 +33,7 @@ function ChartTooltipContent({
   formatter,
   ...props
 }) {
-  if (!active || !payload?.length) {
-    return null
-  }
+  if (!active || !payload?.length) return null
 
   return (
     <div className={cn("rounded-lg border bg-background p-2 shadow-sm", className)} {...props}>
@@ -68,7 +64,6 @@ function ChartTooltipContent({
   )
 }
 
-// Export safe BarChart component
 export function SafeBarChart({
   data = sampleData,
   xAxis,
@@ -86,13 +81,10 @@ export function SafeBarChart({
   showAnimation = true,
   ...props
 }) {
-  // Use sample data if no data is provided or data is empty
   const chartData = (!data || !data.length) ? sampleData : data
-  
   const indexKey = index || "name"
-  // Safely get category keys, with fallback
-  const categoryKeys = categories || 
-    (chartData[0] ? Object.keys(chartData[0]).filter(key => key !== indexKey) : ["value"])
+  const categoryKeys = categories ||
+    (chartData.length > 0 ? Object.keys(chartData[0]).filter(key => key !== indexKey) : ["value"])
 
   return (
     <ResponsiveContainer width="100%" height={300}>
@@ -128,7 +120,6 @@ export function SafeBarChart({
   )
 }
 
-// Export safe LineChart component
 export function SafeLineChart({
   data = sampleData,
   xAxis,
@@ -146,13 +137,10 @@ export function SafeLineChart({
   showAnimation = true,
   ...props
 }) {
-  // Use sample data if no data is provided or data is empty
   const chartData = (!data || !data.length) ? sampleData : data
-  
   const indexKey = index || "name"
-  // Safely get category keys, with fallback
-  const categoryKeys = categories || 
-    (chartData[0] ? Object.keys(chartData[0]).filter(key => key !== indexKey) : ["value"])
+  const categoryKeys = categories ||
+    (chartData.length > 0 ? Object.keys(chartData[0]).filter(key => key !== indexKey) : ["value"])
 
   return (
     <ResponsiveContainer width="100%" height={300}>

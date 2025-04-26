@@ -49,8 +49,8 @@ export default function FindrPage() {
     const controller = new AbortController();
     abortControllerRef.current = controller;
     try {
-      // Set a 10s timeout for the initial response
-      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      // Set a 300s timeout to match Vercel's timeout
+      const timeoutId = setTimeout(() => controller.abort(), 300000);
       
       let response;
       try {
@@ -93,7 +93,7 @@ export default function FindrPage() {
         ]);
       } catch (err: any) {
         if (err.name === "AbortError") {
-          setError("Request timed out after 10 seconds");
+          setError("Request timed out after 300 seconds");
         } else {
           console.error('API Error:', err);
           setError(err.message || "An error occurred. Please try again.");

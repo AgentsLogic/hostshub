@@ -1,3 +1,5 @@
+"use client"; // Convert to Client Component
+
 import { DashboardShell } from "@/app/dashboard/components/dashboard-shell";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { Button } from "@/components/ui/button";
@@ -19,6 +21,7 @@ export default function SmartInsightsPage() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <h1 className="text-2xl font-bold">Smart Insights</h1>
           <div className="flex gap-2 items-center">
+            {/* Now we can pass a dummy onUpdate since this is a Client Component */}
             <DateRangePicker onUpdate={() => {}} />
             <Button variant="outline">Export</Button>
           </div>

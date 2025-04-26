@@ -1,7 +1,29 @@
-import { supabase } from "../supabase"
-import type { Booking } from "../database-schema"
+import { supabase } from "../supabase";
+import type { Booking, Property, Guest, Channel } from "../database-schema";
 
-export async function getBookings(propertyId?: string): Promise<Booking[]> {
+// Define and export a type that includes the nested relations fetched by the query
+// Use Pick<> to select only the fields actually queried
+export type BookingWithDetails = Booking & {
+  property: Pick<Property, "id" | "name"> | null;
+  guest: Pick<Guest, "id" | "first_name" | "last_name" | "email"> | null;
+  channel: Pick<Channel, "id" | "name"> | null;
+};
+
+// Export type for the single booking fetch, includes guest phone
+export type SingleBookingWithDetails = Booking & {
+  property: Pick<Property, "id" | "name"> | null;
+  guest: Pick<Guest, "id" | "first_name" | "last_name" | "email" | "phone"> | null;
+  channel: Pick<Channel, "id" | "name"> | null;
+};
+
+// Export type for date range fetch (doesn't include property details in this query)
+export type BookingWithGuestChannel = Booking & {
+  guest: Pick<Guest, "id" | "first_name" | "last_name"> | null;
+  channel: Pick<Channel, "id" | "name"> | null;
+};
+
+
+export async function getBookings(propertyId?: string): Promise<BookingWithDetails[]> {
   let query = supabase
     .from("bookings")
     .select(`
@@ -20,13 +42,14 @@ export async function getBookings(propertyId?: string): Promise<Booking[]> {
 
   if (error) {
     console.error("Error fetching bookings:", error)
-    throw error
+    throw error;
   }
 
-  return data as unknown as Booking[]
+  // Use the more specific type here
+  return data as unknown as BookingWithDetails[];
 }
 
-export async function getBooking(id: string): Promise<Booking | null> {
+export async function getBooking(id: string): Promise<SingleBookingWithDetails | null> {
   const { data, error } = await supabase
     .from("bookings")
     .select(`
@@ -40,10 +63,11 @@ export async function getBooking(id: string): Promise<Booking | null> {
 
   if (error) {
     console.error("Error fetching booking:", error)
-    throw error
+    throw error;
   }
 
-  return data as unknown as Booking
+  // Use the more specific type here
+  return data as unknown as SingleBookingWithDetails;
 }
 
 export async function createBooking(booking: Omit<Booking, "id" | "created_at" | "updated_at">): Promise<Booking> {
@@ -84,7 +108,7 @@ export async function getBookingsByDateRange(
   propertyId: string,
   startDate: string,
   endDate: string,
-): Promise<Booking[]> {
+): Promise<BookingWithGuestChannel[]> {
   const { data, error } = await supabase
     .from("bookings")
     .select(`
@@ -102,9 +126,9 @@ export async function getBookingsByDateRange(
 
   if (error) {
     console.error("Error fetching bookings by date range:", error)
-    throw error
+    throw error;
   }
 
-  return data as unknown as Booking[]
+  // Use the more specific type here
+  return data as unknown as BookingWithGuestChannel[];
 }
-

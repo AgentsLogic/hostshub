@@ -35,7 +35,8 @@ import {
   Filter,
   MoreHorizontal,
   Eye,
-} from "lucide-react"
+  ArrowUpDown, // Add ArrowUpDown here
+} from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -53,17 +54,53 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Progress } from "@/components/ui/progress"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Progress } from "@/components/ui/progress";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+// Define types for the campaign data structures
+interface BaseCampaign {
+  id: string;
+  name: string;
+  status: "active" | "paused" | "draft";
+  audience: string;
+  schedule: string;
+  type: "email" | "social";
+}
+
+interface EmailCampaign extends BaseCampaign {
+  type: "email";
+  subject: string;
+  recipients: number;
+  openRate: number;
+  clickRate: number;
+  lastSent: string;
+}
+
+interface SocialCampaign extends BaseCampaign {
+  type: "social";
+  platform: "instagram" | "facebook" | "twitter";
+  reach: number;
+  engagement: number;
+  clicks: number;
+  lastPosted: string;
+}
+
+// Union type for any campaign
+type Campaign = EmailCampaign | SocialCampaign;
+
+// Type guard to check if a campaign is an EmailCampaign
+function isEmailCampaign(campaign: Campaign): campaign is EmailCampaign {
+  return campaign.type === "email";
+}
 
 export default function MarketingCampaignsPage() {
   const { toast } = useToast()
   const [activeTab, setActiveTab] = useState("email")
   const [searchQuery, setSearchQuery] = useState("")
-  const [statusFilter, setStatusFilter] = useState("all")
+  const [statusFilter, setStatusFilter] = useState("all");
 
-  // Mock data for email campaigns
-  const emailCampaigns = [
+  // Mock data for email campaigns with explicit typing
+  const emailCampaigns: EmailCampaign[] = [
     {
       id: "ec1",
       name: "Welcome Series",
@@ -129,10 +166,10 @@ export default function MarketingCampaignsPage() {
       schedule: "Automated",
       type: "email",
     },
-  ]
+  ];
 
-  // Mock data for social media campaigns
-  const socialCampaigns = [
+  // Mock data for social media campaigns with explicit typing
+  const socialCampaigns: SocialCampaign[] = [
     {
       id: "sc1",
       name: "Summer Promotion",
@@ -431,6 +468,7 @@ export default function MarketingCampaignsPage() {
                 <div className="space-y-2">
                   <Label>Media</Label>
                   <div className="border-2 border-dashed rounded-md p-6 text-center">
+                    {/* Remove alt prop from Lucide icon */}
                     <Image className="h-8 w-8 mx-auto text-muted-foreground" />
                     <p className="mt-2 text-sm text-muted-foreground">
                       Drag and drop an image here, or click to browse
@@ -575,7 +613,8 @@ export default function MarketingCampaignsPage() {
                         </DropdownMenu>
                       </div>
                     </div>
-                    <CardDescription>Subject: {campaign.subject}</CardDescription>
+                    {/* Use type guard for email-specific property */}
+                    <CardDescription>Subject: {isEmailCampaign(campaign) ? campaign.subject : "N/A"}</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -585,7 +624,8 @@ export default function MarketingCampaignsPage() {
                           <Users className="h-4 w-4 text-muted-foreground" />
                           <span>{campaign.audience}</span>
                         </div>
-                        <div className="text-xs text-muted-foreground">{campaign.recipients} recipients</div>
+                        {/* Use type guard for email-specific property */}
+                        <div className="text-xs text-muted-foreground">{isEmailCampaign(campaign) ? campaign.recipients : "-"} recipients</div>
                       </div>
                       <div className="space-y-1">
                         <div className="text-sm text-muted-foreground">Schedule</div>
@@ -594,21 +634,29 @@ export default function MarketingCampaignsPage() {
                           <span>{campaign.schedule}</span>
                         </div>
                         <div className="text-xs text-muted-foreground">
+                          {/* Use type guard for email-specific property */}
                           Last sent:{" "}
-                          {campaign.lastSent === "Never" ? "Never" : new Date(campaign.lastSent).toLocaleDateString()}
+                          {isEmailCampaign(campaign) && campaign.lastSent !== "Never"
+                            ? new Date(campaign.lastSent).toLocaleDateString()
+                            : "Never"}
                         </div>
                       </div>
                       <div className="space-y-1">
                         <div className="text-sm text-muted-foreground">Performance</div>
                         <div className="flex items-center gap-4">
-                          <div>
-                            <div className="text-sm font-medium">{campaign.openRate}%</div>
-                            <div className="text-xs text-muted-foreground">Open rate</div>
-                          </div>
-                          <div>
-                            <div className="text-sm font-medium">{campaign.clickRate}%</div>
-                            <div className="text-xs text-muted-foreground">Click rate</div>
-                          </div>
+                          {/* Use type guard for email-specific properties */}
+                          {isEmailCampaign(campaign) && (
+                            <>
+                              <div>
+                                <div className="text-sm font-medium">{campaign.openRate}%</div>
+                                <div className="text-xs text-muted-foreground">Open rate</div>
+                              </div>
+                              <div>
+                                <div className="text-sm font-medium">{campaign.clickRate}%</div>
+                                <div className="text-xs text-muted-foreground">Click rate</div>
+                              </div>
+                            </>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -691,7 +739,8 @@ export default function MarketingCampaignsPage() {
                   <CardHeader className="pb-2">
                     <div className="flex justify-between items-start">
                       <div className="flex items-center gap-2">
-                        {getPlatformIcon(campaign.platform)}
+                        {/* Use type guard for social-specific property */}
+                        {!isEmailCampaign(campaign) && getPlatformIcon(campaign.platform)}
                         <CardTitle className="text-lg">{campaign.name}</CardTitle>
                       </div>
                       <div className="flex items-center gap-2">
@@ -750,8 +799,9 @@ export default function MarketingCampaignsPage() {
                         </DropdownMenu>
                       </div>
                     </div>
+                    {/* Use type guard for social-specific property */}
                     <CardDescription>
-                      Platform: {campaign.platform.charAt(0).toUpperCase() + campaign.platform.slice(1)}
+                      Platform: {!isEmailCampaign(campaign) ? campaign.platform.charAt(0).toUpperCase() + campaign.platform.slice(1) : "N/A"}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -770,28 +820,32 @@ export default function MarketingCampaignsPage() {
                           <span>{campaign.schedule}</span>
                         </div>
                         <div className="text-xs text-muted-foreground">
+                          {/* Use type guard for social-specific property */}
                           Last posted:{" "}
-                          {campaign.lastPosted === "Never"
-                            ? "Never"
-                            : new Date(campaign.lastPosted).toLocaleDateString()}
+                          {!isEmailCampaign(campaign) && campaign.lastPosted !== "Never"
+                            ? new Date(campaign.lastPosted).toLocaleDateString()
+                            : "Never"}
                         </div>
                       </div>
                       <div className="space-y-1">
                         <div className="text-sm text-muted-foreground">Performance</div>
-                        <div className="flex items-center gap-4">
-                          <div>
-                            <div className="text-sm font-medium">{campaign.reach}</div>
-                            <div className="text-xs text-muted-foreground">Reach</div>
+                        {/* Use type guard for social-specific properties */}
+                        {!isEmailCampaign(campaign) && (
+                          <div className="flex items-center gap-4">
+                            <div>
+                              <div className="text-sm font-medium">{campaign.reach}</div>
+                              <div className="text-xs text-muted-foreground">Reach</div>
+                            </div>
+                            <div>
+                              <div className="text-sm font-medium">{campaign.engagement}</div>
+                              <div className="text-xs text-muted-foreground">Engagement</div>
+                            </div>
+                            <div>
+                              <div className="text-sm font-medium">{campaign.clicks}</div>
+                              <div className="text-xs text-muted-foreground">Clicks</div>
+                            </div>
                           </div>
-                          <div>
-                            <div className="text-sm font-medium">{campaign.engagement}</div>
-                            <div className="text-xs text-muted-foreground">Engagement</div>
-                          </div>
-                          <div>
-                            <div className="text-sm font-medium">{campaign.clicks}</div>
-                            <div className="text-xs text-muted-foreground">Clicks</div>
-                          </div>
-                        </div>
+                        )}
                       </div>
                     </div>
                   </CardContent>
@@ -974,9 +1028,10 @@ export default function MarketingCampaignsPage() {
                                 <span>Email</span>
                               </div>
                             ) : (
+                              // Use type guard for social-specific properties
                               <div className="flex items-center gap-1">
-                                {getPlatformIcon(campaign.platform)}
-                                <span>{campaign.platform.charAt(0).toUpperCase() + campaign.platform.slice(1)}</span>
+                                {!isEmailCampaign(campaign) ? getPlatformIcon(campaign.platform) : null}
+                                <span>{!isEmailCampaign(campaign) ? campaign.platform.charAt(0).toUpperCase() + campaign.platform.slice(1) : 'Social'}</span>
                               </div>
                             )}
                           </td>
@@ -988,12 +1043,17 @@ export default function MarketingCampaignsPage() {
                           </td>
                           <td className="p-4 align-middle">{campaign.audience}</td>
                           <td className="p-4 align-middle text-right">
-                            {campaign.type === "email" ? `${campaign.openRate}%` : campaign.reach}
+                            {/* Use type guard */}
+                            {isEmailCampaign(campaign) ? `${campaign.openRate}%` : campaign.reach}
                           </td>
                           <td className="p-4 align-middle text-right">
-                            {campaign.type === "email" ? `${campaign.clickRate}%` : campaign.engagement}
+                            {/* Use type guard */}
+                            {isEmailCampaign(campaign) ? `${campaign.clickRate}%` : campaign.engagement}
                           </td>
-                          <td className="p-4 align-middle text-right">{campaign.type === "email" ? "3.5%" : "1.2%"}</td>
+                          <td className="p-4 align-middle text-right">
+                            {/* Use type guard (assuming conversion is calculated differently or mock) */}
+                            {isEmailCampaign(campaign) ? "3.5%" : "1.2%"}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -1282,4 +1342,3 @@ export default function MarketingCampaignsPage() {
     </DashboardShell>
   )
 }
-

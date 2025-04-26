@@ -1,10 +1,12 @@
-import { Activities } from '../../pages/Activities';
-import { Layout } from '../../components/Layout';
+import React from 'react';
 
-export default function Page() {
+const ActivitiesPage = () => {
   return (
-    <Layout>
-      <Activities />
-    </Layout>
+    <div>
+      <h1>Activities</h1>
+      <p>This is the activities page.</p>
+    </div>
   );
-}
+};
+
+export default ActivitiesPage;

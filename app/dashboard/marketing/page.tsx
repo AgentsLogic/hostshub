@@ -1,3 +1,5 @@
+"use client"; // Convert to Client Component
+
 import { DashboardShell } from "@/app/dashboard/components/dashboard-shell";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { Button } from "@/components/ui/button";

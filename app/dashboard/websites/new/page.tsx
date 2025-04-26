@@ -144,7 +144,8 @@ export default function NewWebsitePage() {
     }, 500);
 
     return () => clearTimeout(debounceTimer);
-  }, [subdomain]);
+  // Add addNotification to dependency array
+  }, [subdomain, addNotification]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

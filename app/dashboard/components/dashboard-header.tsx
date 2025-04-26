@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { NotificationCenter } from "@/components/notifications/notification-center"
 import { ThemeSwitch } from "@/components/theme-switch"
+import React from "react"
 import { 
   Search, 
   Settings, 
@@ -25,36 +26,25 @@ import {
 } from "lucide-react"
 
 interface DashboardHeaderProps {
+  heading: string
+  text?: string
+  children?: React.ReactNode
   className?: string
 }
 
-export function DashboardHeader({ className }: DashboardHeaderProps) {
-  const pathname = usePathname()
+export function DashboardHeader({ heading, text, children, className }: DashboardHeaderProps) {
   const [searchQuery, setSearchQuery] = useState("")
   
-  // Extract page title from pathname
-  const getPageTitle = () => {
-    if (!pathname) return "Dashboard"
-    
-    const parts = pathname.split("/").filter(Boolean)
-    if (parts.length === 1) return "Dashboard"
-    
-    // Convert kebab-case to Title Case
-    const pageName = parts[parts.length - 1]
-      .split("-")
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ")
-    
-    return pageName
-  }
-  
   return (
-    <header className={`flex items-center justify-between border-b bg-background px-4 py-3 w-full ${className}`}>
-      <div className="flex items-center gap-3">
-        <h1 className="text-xl font-semibold">{getPageTitle()}</h1>
+    <header className={`flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b bg-background px-4 py-3 w-full ${className}`}>
+      <div className="space-y-1">
+        <h1 className="text-xl font-semibold">{heading}</h1>
+        {text && <p className="text-sm text-muted-foreground">{text}</p>}
       </div>
       
       <div className="flex items-center gap-4">
+        {children} {/* Render children here for actions like buttons/selects */}
+        
         <div className="relative hidden md:block">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <input

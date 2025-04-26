@@ -9,13 +9,16 @@ interface ActivitiesProps {
 }
 
 export const Activities = ({ propertyData }: ActivitiesProps) => {
+  // Handle cases where propertyData is null or name is missing
+  const propertyName = propertyData?.name || "Our Activities";
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h1 className="text-4xl font-serif text-gray-900 mb-8">Activities at {propertyData.name}</h1>
+      <h1 className="text-4xl font-serif text-gray-900 mb-8">Activities at {propertyName}</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <img
-            src="assets/images/gallery01/81274bee.jpg"
+            src="/assets/images/gallery01/81274bee.jpg"
             alt="ATV Trails"
             className="w-full h-64 object-cover"
           />
@@ -27,7 +30,7 @@ export const Activities = ({ propertyData }: ActivitiesProps) => {
 
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <img
-            src="assets/images/gallery01/a62b4d59.jpg"
+            src="/assets/images/gallery01/a62b4d59.jpg"
             alt="Shooting Range"
             className="w-full h-64 object-cover"
           />
@@ -39,7 +42,7 @@ export const Activities = ({ propertyData }: ActivitiesProps) => {
 
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <img
-            src="assets/images/gallery01/2851bef4.jpg"
+            src="/assets/images/gallery01/2851bef4.jpg"
             alt="River Activities"
             className="w-full h-64 object-cover"
           />

@@ -11,11 +11,11 @@ import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
 interface DateRangePickerProps {
-  initialDateFrom?: Date
-  initialDateTo?: Date
-  onUpdate: (values: { range: DateRange | undefined }) => void
-  align?: "center" | "start" | "end"
-  triggerClassName?: string
+  initialDateFrom?: Date;
+  initialDateTo?: Date;
+  onUpdate?: (values: { range: DateRange | undefined }) => void; // Make onUpdate optional
+  align?: "center" | "start" | "end";
+  triggerClassName?: string;
   triggerIcon?: React.ReactNode
 }
 
@@ -36,10 +36,12 @@ export function DateRangePicker({
       : undefined
   )
 
-  // Update parent component when date changes
+  // Update parent component when date changes, only if onUpdate is provided
   React.useEffect(() => {
-    onUpdate({ range: date })
-  }, [date, onUpdate])
+    if (onUpdate) {
+      onUpdate({ range: date });
+    }
+  }, [date, onUpdate]);
 
   return (
     <div className="grid gap-2">

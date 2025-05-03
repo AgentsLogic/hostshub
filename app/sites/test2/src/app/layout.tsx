@@ -1,5 +1,6 @@
 import { Layout } from '../components/Layout';
 import { PropertyDataProvider } from '../contexts/PropertyDataContext';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 
 // Create a mock getPropertyDataBySubdomain since we can't access the real one
 const getPropertyDataBySubdomain = async (subdomain: string) => {
@@ -32,16 +33,29 @@ export default async function SiteLayout({ children, params }: SiteLayoutProps) 
 
   if (!propertyData) {
     // Handle case where property data is not found
-    return <div>Error: Property data not found for this subdomain.</div>;
+    return (
+      <html lang="en">
+        <body>
+          <div className="p-6 bg-red-50 border border-red-200 rounded-lg max-w-lg mx-auto mt-10">
+            <h2 className="text-xl font-semibold text-red-700 mb-2">Property Not Found</h2>
+            <p className="text-red-600 mb-4">
+              We couldn't find property data for this subdomain. Please check the URL and try again.
+            </p>
+          </div>
+        </body>
+      </html>
+    );
   }
 
   return (
     <html lang="en">
       <body>
         <PropertyDataProvider initialData={propertyData}>
-          <Layout>
-            {children}
-          </Layout>
+          <ErrorBoundary>
+            <Layout>
+              {children}
+            </Layout>
+          </ErrorBoundary>
         </PropertyDataProvider>
       </body>
     </html>

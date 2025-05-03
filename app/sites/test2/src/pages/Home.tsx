@@ -1,8 +1,10 @@
 import React from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import { usePropertyData } from '../contexts/PropertyDataContext';
+import Button from '../components/ui/Button';
+import Section from '../components/ui/Section';
+import Card from '../components/ui/Card';
 
 export const Home = () => {
   const { propertyData } = usePropertyData();
@@ -30,105 +32,109 @@ export const Home = () => {
             <p className="text-xl text-gray-200 mb-8">
               {propertyData.description}
             </p>
-            <Link
-              href="/contact" // Use href for next/link
-              className="inline-flex items-center px-6 py-3 text-lg font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+            <Button
+              href="/contact"
+              variant="primary"
+              size="lg"
+              icon={<ArrowRight className="h-5 w-5" />}
             >
               Book Your Stay
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
+            </Button>
           </div>
         </div>
       </div>
 
       {/* Features Section */}
-      <div className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-serif text-gray-900 mb-4">
-              Your Perfect Getaway
-            </h2>
-            <p className="text-xl text-gray-600">
-              Located at: {propertyData.address}
-            </p>
-          </div>
+      <Section background="white" spacing="xl">
+        <Section.Header
+          title="Your Perfect Getaway"
+          description={`Located at: ${propertyData.address}`}
+          centered
+        />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div className="text-center">
-              <div className="relative w-full h-64 mb-6 rounded-lg overflow-hidden">
-                <Image
-                  src="https://images.unsplash.com/photo-1542718610-a1d656d1884c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                  alt="Outdoor Activities"
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
-                  className="object-cover"
-                />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Outdoor Adventures</h3>
-              <p className="text-gray-600">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <Card variant="elevated" padding="none" className="overflow-hidden">
+            <div className="relative w-full h-64">
+              <Image
+                src="https://images.unsplash.com/photo-1542718610-a1d656d1884c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                alt="Outdoor Activities"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
+                className="object-cover"
+              />
+            </div>
+            <div className="p-6 text-center">
+              <Card.Title className="mb-3">Outdoor Adventures</Card.Title>
+              <Card.Description className="text-base">
                 From ATV trails to fishing spots, experience the best of outdoor activities
-              </p>
+              </Card.Description>
             </div>
+          </Card>
 
-            <div className="text-center">
-              <div className="relative w-full h-64 mb-6 rounded-lg overflow-hidden">
-                <Image
-                  src="https://images.unsplash.com/photo-1616047006789-b7af5afb8c20?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                  alt="Luxury Accommodations"
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
-                  className="object-cover"
-                />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Luxury Living</h3>
-              <p className="text-gray-600">
+          <Card variant="elevated" padding="none" className="overflow-hidden">
+            <div className="relative w-full h-64">
+              <Image
+                src="https://images.unsplash.com/photo-1616047006789-b7af5afb8c20?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                alt="Luxury Accommodations"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
+                className="object-cover"
+              />
+            </div>
+            <div className="p-6 text-center">
+              <Card.Title className="mb-3">Luxury Living</Card.Title>
+              <Card.Description className="text-base">
                 Modern amenities and comfortable spaces for the whole family
-              </p>
+              </Card.Description>
             </div>
+          </Card>
 
-            <div className="text-center">
-              <div className="relative w-full h-64 mb-6 rounded-lg overflow-hidden">
-                <Image
-                  src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                  alt="Scenic Views"
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
-                  className="object-cover"
-                />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Scenic Beauty</h3>
-              <p className="text-gray-600">
-                Breathtaking views
-              </p>
+          <Card variant="elevated" padding="none" className="overflow-hidden">
+            <div className="relative w-full h-64">
+              <Image
+                src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                alt="Scenic Views"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
+                className="object-cover"
+              />
             </div>
-          </div>
+            <div className="p-6 text-center">
+              <Card.Title className="mb-3">Scenic Beauty</Card.Title>
+              <Card.Description className="text-base">
+                Breathtaking views of the surrounding landscape
+              </Card.Description>
+            </div>
+          </Card>
         </div>
-      </div>
+      </Section>
 
       {/* CTA Section */}
-      <div className="bg-gray-100 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <Section background="light" spacing="xl">
+        <div className="text-center">
           <h2 className="text-3xl font-serif text-gray-900 mb-8">
             Ready for an Unforgettable Experience?
           </h2>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link
-              href="/gallery" // Use href for next/link
-              className="inline-flex items-center px-6 py-3 text-lg font-medium text-blue-600 bg-white rounded-lg hover:bg-gray-50 transition-colors duration-200"
+            <Button
+              href="/gallery"
+              variant="outline"
+              size="lg"
+              icon={<ArrowRight className="h-5 w-5" />}
             >
               View Gallery
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-            <Link
-              href="/contact" // Use href for next/link
-              className="inline-flex items-center px-6 py-3 text-lg font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+            </Button>
+            <Button
+              href="/contact"
+              variant="primary"
+              size="lg"
+              icon={<ArrowRight className="h-5 w-5" />}
             >
               Book Now
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
+            </Button>
           </div>
         </div>
-      </div>
+      </Section>
     </div>
   );
 };

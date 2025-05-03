@@ -40,9 +40,10 @@ export async function getBookings(propertyId?: string): Promise<BookingWithDetai
 
   const { data, error } = await query
 
-  if (error) {
+  if (error || !data) {
     console.error("Error fetching bookings:", error)
-    throw error;
+    // Return an empty array instead of throwing or returning null/undefined
+    return [];
   }
 
   // Use the more specific type here
@@ -124,9 +125,10 @@ export async function getBookingsByDateRange(
     .or(`check_out.gte.${startDate},check_out.lte.${endDate}`)
     .neq("status", "cancelled")
 
-  if (error) {
+  if (error || !data) {
     console.error("Error fetching bookings by date range:", error)
-    throw error;
+    // Return an empty array instead of throwing or returning null/undefined
+    return [];
   }
 
   // Use the more specific type here

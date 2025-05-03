@@ -3,19 +3,16 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, Bed, Mountain, Camera, Mail, Menu, X } from 'lucide-react';
+import { usePropertyData } from '../contexts/PropertyDataContext';
 
 interface LayoutProps {
   children: React.ReactNode;
-  propertyData?: {
-    name: string;
-    description: string;
-    address: string;
-  };
 }
 
-export const Layout = ({ children, propertyData }: LayoutProps) => {
+export const Layout = ({ children }: LayoutProps) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const pathname = usePathname();
+  const { propertyData } = usePropertyData();
 
   const navigation = [
     { name: 'Home', href: '/', icon: Home },
@@ -35,7 +32,7 @@ export const Layout = ({ children, propertyData }: LayoutProps) => {
                 <span className="text-xl font-serif text-gray-900">Twin Hills River Ranch</span>
               </Link>
             </div>
-            
+
             {/* Desktop Navigation */}
             <div className="hidden md:flex md:items-center md:space-x-8">
               {navigation.map((item) => (

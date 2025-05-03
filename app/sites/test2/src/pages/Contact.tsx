@@ -1,15 +1,9 @@
 import React from 'react';
 import { Mail, Phone, MapPin } from 'lucide-react';
+import { usePropertyData } from '../contexts/PropertyDataContext';
 
-interface ContactProps {
-  propertyData: {
-    name: string;
-    description: string;
-    address: string;
-  };
-}
-
-export const Contact = ({ propertyData }: ContactProps) => {
+export const Contact = () => {
+  const { propertyData } = usePropertyData();
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <h1 className="text-4xl font-serif text-gray-900 mb-8">Contact {propertyData.name}</h1>

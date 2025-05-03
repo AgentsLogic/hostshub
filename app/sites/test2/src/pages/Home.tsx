@@ -1,16 +1,10 @@
 import React from 'react';
 import Link from 'next/link'; // Use next/link for Next.js
 import { ArrowRight } from 'lucide-react';
+import { usePropertyData } from '../contexts/PropertyDataContext';
 
-interface HomeProps {
-  propertyData: {
-    name: string;
-    description: string;
-    address: string;
-  };
-}
-
-export const Home = ({ propertyData }: HomeProps) => {
+export const Home = () => {
+  const { propertyData } = usePropertyData();
   return (
     <div>
       {/* Hero Section */}

@@ -1,12 +1,20 @@
-import { Layout } from '../components/Layout'; // Assuming Layout is in components
+import { Layout } from '../components/Layout';
+import { PropertyDataProvider } from '../contexts/PropertyDataContext';
 
 // Create a mock getPropertyDataBySubdomain since we can't access the real one
-const getPropertyDataBySubdomain = (subdomain: string) => {
-  return {
-    name: "Twin Hills River Ranch",
-    description: "A beautiful ranch resort with various accommodations and activities.",
-    address: "123 Ranch Road, Twin Hills, TX"
-  };
+const getPropertyDataBySubdomain = async (subdomain: string) => {
+  try {
+    // In a real application, this would fetch from a database
+    // For now, return mock data
+    return {
+      name: "Twin Hills River Ranch",
+      description: "A beautiful ranch resort with various accommodations and activities.",
+      address: "123 Ranch Road, Twin Hills, TX"
+    };
+  } catch (error) {
+    console.error("Error fetching property data:", error);
+    return null;
+  }
 };
 
 interface SiteLayoutProps {
@@ -17,10 +25,10 @@ interface SiteLayoutProps {
 }
 
 export default async function SiteLayout({ children, params }: SiteLayoutProps) {
-  const subdomain = params.subdomain;
+  const subdomain = params.subdomain || '';
 
   // Fetch property data using the mocked function
-  const propertyData = getPropertyDataBySubdomain(subdomain);
+  const propertyData = await getPropertyDataBySubdomain(subdomain);
 
   if (!propertyData) {
     // Handle case where property data is not found
@@ -30,9 +38,11 @@ export default async function SiteLayout({ children, params }: SiteLayoutProps) 
   return (
     <html lang="en">
       <body>
-        <Layout propertyData={propertyData}>
-          {children}
-        </Layout>
+        <PropertyDataProvider initialData={propertyData}>
+          <Layout>
+            {children}
+          </Layout>
+        </PropertyDataProvider>
       </body>
     </html>
   );

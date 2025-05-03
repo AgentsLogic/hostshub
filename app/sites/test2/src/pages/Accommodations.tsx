@@ -1,14 +1,8 @@
 import React from 'react';
+import { usePropertyData } from '../contexts/PropertyDataContext';
 
-interface AccommodationsProps {
-  propertyData: {
-    name: string;
-    description: string;
-    address: string;
-  };
-}
-
-export const Accommodations = ({ propertyData }: AccommodationsProps) => {
+export const Accommodations = () => {
+  const { propertyData } = usePropertyData();
   // Handle cases where propertyData is null or name is missing
   const propertyName = propertyData?.name || "Our Accommodations";
 

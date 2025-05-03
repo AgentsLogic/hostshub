@@ -1,14 +1,8 @@
 import React from 'react';
+import { usePropertyData } from '../contexts/PropertyDataContext';
 
-interface GalleryProps {
-  propertyData: {
-    name: string;
-    description: string;
-    address: string;
-  };
-}
-
-export const Gallery = ({ propertyData }: GalleryProps) => {
+export const Gallery = () => {
+  const { propertyData } = usePropertyData();
   const images = [
     {
       src: "assets/images/gallery01/3bad50ec.jpg",

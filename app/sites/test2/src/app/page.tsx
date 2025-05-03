@@ -1,15 +1,14 @@
 import { Home } from '../pages/Home';
 import { Layout } from '../components/Layout';
 
-interface PageProps {
-  propertyData: {
-    name: string;
-    description: string;
-    address: string;
+export default function Page() {
+  // Provide default property data to prevent the error
+  const propertyData = {
+    name: "Twin Hills River Ranch",
+    description: "A beautiful ranch resort with various accommodations and activities.",
+    address: "123 Ranch Road, Twin Hills, TX"
   };
-}
 
-export default function Page({ propertyData }: PageProps) {
   return (
     <Layout propertyData={propertyData}>
       <Home propertyData={propertyData} />

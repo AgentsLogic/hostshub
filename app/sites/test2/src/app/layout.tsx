@@ -2,12 +2,25 @@ import { Layout } from '../components/Layout';
 import { PropertyDataProvider } from '../contexts/PropertyDataContext';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import { getPropertyDataBySubdomain, propertyExists } from '../utils/db';
+import { generateMetadata as createMetadata } from '../utils/metadata';
+import { Metadata } from 'next';
 
 interface SiteLayoutProps {
   children: React.ReactNode;
   params: {
     subdomain: string;
   };
+}
+
+// Generate metadata for the site
+export async function generateMetadata({ params }: SiteLayoutProps): Promise<Metadata> {
+  const subdomain = params.subdomain || '';
+  const propertyData = await getPropertyDataBySubdomain(subdomain);
+
+  return createMetadata({
+    propertyData,
+    path: `/${subdomain}`,
+  });
 }
 
 export default async function SiteLayout({ children, params }: SiteLayoutProps) {

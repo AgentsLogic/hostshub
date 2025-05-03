@@ -1,5 +1,28 @@
 import { Home } from '../pages/Home';
 import { ErrorBoundary } from '../components/ErrorBoundary';
+import { getPropertyDataBySubdomain } from '../utils/db';
+import { generateMetadata as createMetadata } from '../utils/metadata';
+import { Metadata } from 'next';
+
+interface PageProps {
+  params: {
+    subdomain: string;
+  };
+}
+
+// Generate metadata for the home page
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const subdomain = params.subdomain || '';
+  const propertyData = await getPropertyDataBySubdomain(subdomain);
+
+  return createMetadata({
+    title: 'Home',
+    description: `Welcome to ${propertyData.name}. ${propertyData.description}`,
+    propertyData,
+    path: `/${subdomain}`,
+    images: ['/assets/images/gallery01/3bad50ec.jpg'],
+  });
+}
 
 export default function Page() {
   return (

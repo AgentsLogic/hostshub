@@ -1,12 +1,17 @@
-import React from 'react';
+import { Activities } from '../../pages/Activities';
+import { Layout } from '../../components/Layout';
 
-const ActivitiesPage = () => {
+export default function Page() {
+  // Provide default property data to prevent the error
+  const propertyData = {
+    name: "Twin Hills River Ranch",
+    description: "A beautiful ranch resort with various accommodations and activities.",
+    address: "123 Ranch Road, Twin Hills, TX"
+  };
+
   return (
-    <div>
-      <h1>Activities</h1>
-      <p>This is the activities page.</p>
-    </div>
+    <Layout propertyData={propertyData}>
+      <Activities propertyData={propertyData} />
+    </Layout>
   );
-};
-
-export default ActivitiesPage;
+}

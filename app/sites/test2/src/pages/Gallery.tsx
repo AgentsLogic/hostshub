@@ -1,69 +1,28 @@
 import React from 'react';
-import Image from 'next/image';
-import { usePropertyData } from '../contexts/PropertyDataContext';
+import { lazyLoad } from '../utils/lazyLoad';
+
+// Lazy load the OptimizedGallery component
+const OptimizedGallery = lazyLoad(
+  () => import('../components/OptimizedGallery'),
+  {
+    fallback: (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="animate-pulse">
+          <div className="h-10 bg-gray-200 rounded w-3/4 mb-8"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="space-y-2">
+                <div className="h-64 bg-gray-200 rounded-lg"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    ),
+  }
+);
 
 export const Gallery = () => {
-  const { propertyData } = usePropertyData();
-  const images = [
-    {
-      src: "assets/images/gallery01/3bad50ec.jpg",
-      alt: "Over 5,120 sq. ft",
-      caption: "Over 5,120 sq. ft"
-    },
-    {
-      src: "assets/images/gallery01/a62b4d59.jpg",
-      alt: "Sweeping country views",
-      caption: "Sweeping country views"
-    },
-    {
-      src: "assets/images/gallery01/2851bef4.jpg",
-      alt: "Custom fire pit",
-      caption: "Custom fire pit"
-    },
-    {
-      src: "assets/images/gallery01/81274bee.jpg",
-      alt: "Private acreage",
-      caption: "Private acreage"
-    },
-    {
-      src: "assets/images/gallery01/670274ff.jpg",
-      alt: "Six spacious bedrooms",
-      caption: "Six spacious bedrooms"
-    },
-    {
-      src: "assets/images/gallery01/025a92ba.jpg",
-      alt: "Grand kitchen",
-      caption: "Grand kitchen"
-    },
-    {
-      src: "assets/images/gallery01/a9102669.jpg",
-      alt: "Gathering space for the whole crew",
-      caption: "Gathering space for the whole crew"
-    }
-  ];
-
-  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h1 className="text-4xl font-serif text-gray-900 mb-8">Photo Gallery for {propertyData.name}</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {images.map((image, index) => (
-          <div key={index} className="group relative">
-            <div className="aspect-w-3 aspect-h-2 overflow-hidden rounded-lg bg-gray-100">
-              <div className="relative h-96 w-full">
-                <Image
-                  src={`/${image.src}`}
-                  alt={image.alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover object-center group-hover:opacity-75 transition-opacity duration-300"
-                  priority={index < 2} // Prioritize loading the first two images
-                />
-              </div>
-            </div>
-            <p className="mt-2 text-sm text-gray-500">{image.caption}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+  return <OptimizedGallery />;
 };

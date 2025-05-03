@@ -1,5 +1,6 @@
 import React from 'react';
-import Link from 'next/link'; // Use next/link for Next.js
+import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import { usePropertyData } from '../contexts/PropertyDataContext';
 
@@ -8,14 +9,20 @@ export const Home = () => {
   return (
     <div>
       {/* Hero Section */}
-      <div
-        className="relative h-[80vh] bg-cover bg-center"
-        style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2960&q=80")'
-        }}
-      >
-        <div className="absolute inset-0 bg-black bg-opacity-50" />
-        <div className="relative h-full flex items-center justify-center text-center">
+      <div className="relative h-[80vh]">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2960&q=80"
+            alt="Ranch hero image"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+            quality={85}
+          />
+        </div>
+        <div className="absolute inset-0 bg-black bg-opacity-50 z-10" />
+        <div className="relative h-full flex items-center justify-center text-center z-20">
           <div className="max-w-4xl px-4">
             <h1 className="text-4xl md:text-6xl font-serif text-white mb-6">
               Welcome to {propertyData.name}
@@ -48,11 +55,15 @@ export const Home = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             <div className="text-center">
-              <img
-                src="https://images.unsplash.com/photo-1542718610-a1d656d1884c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                alt="Outdoor Activities"
-                className="w-full h-64 object-cover rounded-lg mb-6"
-              />
+              <div className="relative w-full h-64 mb-6 rounded-lg overflow-hidden">
+                <Image
+                  src="https://images.unsplash.com/photo-1542718610-a1d656d1884c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                  alt="Outdoor Activities"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
+                  className="object-cover"
+                />
+              </div>
               <h3 className="text-xl font-semibold mb-3">Outdoor Adventures</h3>
               <p className="text-gray-600">
                 From ATV trails to fishing spots, experience the best of outdoor activities
@@ -60,11 +71,15 @@ export const Home = () => {
             </div>
 
             <div className="text-center">
-              <img
-                src="https://images.unsplash.com/photo-1616047006789-b7af5afb8c20?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                alt="Luxury Accommodations"
-                className="w-full h-64 object-cover rounded-lg mb-6"
-              />
+              <div className="relative w-full h-64 mb-6 rounded-lg overflow-hidden">
+                <Image
+                  src="https://images.unsplash.com/photo-1616047006789-b7af5afb8c20?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                  alt="Luxury Accommodations"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
+                  className="object-cover"
+                />
+              </div>
               <h3 className="text-xl font-semibold mb-3">Luxury Living</h3>
               <p className="text-gray-600">
                 Modern amenities and comfortable spaces for the whole family
@@ -72,11 +87,15 @@ export const Home = () => {
             </div>
 
             <div className="text-center">
-              <img
-                src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                alt="Scenic Views"
-                className="w-full h-64 object-cover rounded-lg mb-6"
-              />
+              <div className="relative w-full h-64 mb-6 rounded-lg overflow-hidden">
+                <Image
+                  src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                  alt="Scenic Views"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
+                  className="object-cover"
+                />
+              </div>
               <h3 className="text-xl font-semibold mb-3">Scenic Beauty</h3>
               <p className="text-gray-600">
                 Breathtaking views

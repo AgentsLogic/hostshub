@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { usePropertyData } from '../contexts/PropertyDataContext';
 
 export const Gallery = () => {
@@ -48,11 +49,16 @@ export const Gallery = () => {
         {images.map((image, index) => (
           <div key={index} className="group relative">
             <div className="aspect-w-3 aspect-h-2 overflow-hidden rounded-lg bg-gray-100">
-              <img
-                src={image.src}
-                alt={image.alt}
-                className="h-96 w-full object-cover object-center group-hover:opacity-75 transition-opacity duration-300"
-              />
+              <div className="relative h-96 w-full">
+                <Image
+                  src={`/${image.src}`}
+                  alt={image.alt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover object-center group-hover:opacity-75 transition-opacity duration-300"
+                  priority={index < 2} // Prioritize loading the first two images
+                />
+              </div>
             </div>
             <p className="mt-2 text-sm text-gray-500">{image.caption}</p>
           </div>

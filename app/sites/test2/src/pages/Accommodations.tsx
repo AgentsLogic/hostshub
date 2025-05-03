@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { usePropertyData } from '../contexts/PropertyDataContext';
 
 export const Accommodations = () => {
@@ -11,11 +12,16 @@ export const Accommodations = () => {
       <h1 className="text-4xl font-serif text-gray-900 mb-8">Accommodations at {propertyName}</h1>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         <div>
-          <img
-            src="/assets/images/gallery01/670274ff.jpg"
-            alt="Master Bedroom"
-            className="w-full h-96 object-cover rounded-lg mb-6"
-          />
+          <div className="relative w-full h-96 rounded-lg overflow-hidden mb-6">
+            <Image
+              src="/assets/images/gallery01/670274ff.jpg"
+              alt="Master Bedroom"
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
+              className="object-cover"
+              priority
+            />
+          </div>
           <h2 className="text-2xl font-semibold mb-4">Spacious Bedrooms</h2>
           <ul className="space-y-2 text-gray-600">
             <li>• 4 King beds</li>
@@ -26,11 +32,15 @@ export const Accommodations = () => {
           </ul>
         </div>
         <div>
-          <img
-            src="assets/images/gallery01/025a92ba.jpg"
-            alt="Kitchen"
-            className="w-full h-96 object-cover rounded-lg mb-6"
-          />
+          <div className="relative w-full h-96 rounded-lg overflow-hidden mb-6">
+            <Image
+              src="/assets/images/gallery01/025a92ba.jpg"
+              alt="Kitchen"
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
+              className="object-cover"
+            />
+          </div>
           <h2 className="text-2xl font-semibold mb-4">Modern Amenities</h2>
           <ul className="space-y-2 text-gray-600">
             <li>• Fully equipped modern kitchen</li>

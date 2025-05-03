@@ -29,7 +29,7 @@ export const Layout = ({ children }: LayoutProps) => {
           <div className="flex justify-between h-16">
             <div className="flex">
               <Link href="/" className="flex-shrink-0 flex items-center">
-                <span className="text-xl font-serif text-gray-900">Twin Hills River Ranch</span>
+                <span className="text-xl font-serif text-gray-900">{propertyData?.name || 'Our Property'}</span>
               </Link>
             </div>
 
@@ -39,12 +39,11 @@ export const Layout = ({ children }: LayoutProps) => {
                 <Link
                   key={item.name}
                   href={item.href}
-                  // className={`${
-                  //   pathname === item.href // Cannot use router in RSC
-                  //     ? 'text-blue-600'
-                  //     : 'text-gray-700 hover:text-blue-600'
-                  // } flex items-center px-3 py-2 text-sm font-medium transition-colors duration-200`}
-                   className="text-gray-700 hover:text-blue-600 flex items-center px-3 py-2 text-sm font-medium transition-colors duration-200" // Simplified for RSC
+                  className={`${
+                    pathname === item.href
+                      ? 'text-blue-600'
+                      : 'text-gray-700 hover:text-blue-600'
+                  } flex items-center px-3 py-2 text-sm font-medium transition-colors duration-200`}
                 >
                   <item.icon className="h-4 w-4 mr-1" />
                   {item.name}
@@ -52,11 +51,14 @@ export const Layout = ({ children }: LayoutProps) => {
               ))}
             </div>
 
-            {/* Mobile menu button - needs client component */}
-            {/* <div className="md:hidden flex items-center">
+            {/* Mobile menu button */}
+            <div className="md:hidden flex items-center">
               <button
+                type="button"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="text-gray-700 hover:text-blue-600"
+                aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isMenuOpen ? "true" : "false"}
               >
                 {isMenuOpen ? (
                   <X className="h-6 w-6" />
@@ -64,12 +66,12 @@ export const Layout = ({ children }: LayoutProps) => {
                   <Menu className="h-6 w-6" />
                 )}
               </button>
-            </div> */}
+            </div>
           </div>
         </div>
 
-        {/* Mobile Navigation - needs client component */}
-        {/* {isMenuOpen && (
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
           <div className="md:hidden">
             <div className="pt-2 pb-3 space-y-1">
               {navigation.map((item) => (
@@ -77,7 +79,7 @@ export const Layout = ({ children }: LayoutProps) => {
                   key={item.name}
                   href={item.href}
                   className={`${
-                    pathname === item.href // Updated to use pathname
+                    pathname === item.href
                       ? 'bg-blue-50 text-blue-600'
                       : 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
                   } flex items-center px-3 py-2 text-base font-medium transition-colors duration-200`}
@@ -89,7 +91,7 @@ export const Layout = ({ children }: LayoutProps) => {
               ))}
             </div>
           </div>
-        )} */}
+        )}
       </nav>
 
       <main className="pt-16">

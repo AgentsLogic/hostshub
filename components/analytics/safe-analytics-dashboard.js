@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { SafeBarChart, SafeLineChart } from "@/components/ui/enhanced-chart"
+import { SaferBarChart, SaferLineChart } from "@/components/ui/safer-chart-wrapper"
 import { CalendarDateRangePicker } from "@/components/date-range-picker"
 
 // Sample data for charts
@@ -25,8 +25,13 @@ const bookingsData = [
 
 export function SafeAnalyticsDashboard() {
   // Ensure we have valid data before rendering
-  const validRevenueData = revenueData?.length > 0 ? revenueData : []
-  const validBookingsData = bookingsData?.length > 0 ? bookingsData : []
+  // Ensure data is properly structured
+  const validRevenueData = Array.isArray(revenueData) 
+    ? revenueData.filter(item => item && typeof item === 'object')
+    : []
+  const validBookingsData = Array.isArray(bookingsData)
+    ? bookingsData.filter(item => item && typeof item === 'object')
+    : []
 
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
@@ -87,7 +92,7 @@ export function SafeAnalyticsDashboard() {
                 <CardTitle>Revenue Overview</CardTitle>
               </CardHeader>
               <CardContent className="pl-2">
-                <SafeLineChart data={validRevenueData} categories={["revenue"]} />
+                <SaferLineChart data={validRevenueData} categories={["revenue"]} />
               </CardContent>
             </Card>
             <Card className="col-span-3">
@@ -96,7 +101,7 @@ export function SafeAnalyticsDashboard() {
                 <CardDescription>Distribution of bookings across different platforms</CardDescription>
               </CardHeader>
               <CardContent>
-                <SafeBarChart data={validBookingsData} categories={["value"]} />
+                <SaferBarChart data={validBookingsData} categories={["value"]} />
               </CardContent>
             </Card>
           </div>
@@ -108,7 +113,7 @@ export function SafeAnalyticsDashboard() {
               <CardDescription>Monthly booking patterns and seasonal trends</CardDescription>
             </CardHeader>
             <CardContent className="pl-2">
-              <SafeLineChart data={validRevenueData} categories={["revenue"]} />
+              <SaferLineChart data={validRevenueData} categories={["revenue"]} />
             </CardContent>
           </Card>
         </TabsContent>
@@ -119,7 +124,7 @@ export function SafeAnalyticsDashboard() {
               <CardDescription>Revenue by property type and location</CardDescription>
             </CardHeader>
             <CardContent className="pl-2">
-              <SafeBarChart data={validBookingsData} categories={["value"]} />
+              <SaferBarChart data={validBookingsData} categories={["value"]} />
             </CardContent>
           </Card>
         </TabsContent>

@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import { GlobalErrorBoundary } from "@/components/global-error-boundary"
 import { MainHeader } from "@/components/main-header"
 import { Footer } from "@/components/footer"
 import { NotificationProvider } from "@/contexts/notification-context"
@@ -29,13 +30,15 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <NotificationProvider>
-          <ThemeProvider>
+          <GlobalErrorBoundary>
+            <ThemeProvider>
             <MainHeader />
             <main className="flex-1">
               {children}
             </main>
             <Footer />
-          </ThemeProvider>
+            </ThemeProvider>
+          </GlobalErrorBoundary>
         </NotificationProvider>
       </body>
     </html>

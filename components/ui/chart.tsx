@@ -113,7 +113,7 @@ export function ChartTooltip(props: React.ComponentProps<typeof RechartsTooltip>
 
 // Export BarChart component
 export function BarChart({
-  data,
+  data = [],
   xAxis,
   yAxis,
   categories,
@@ -129,7 +129,7 @@ export function BarChart({
   showAnimation = true,
   ...props
 }: {
-  data: any[]
+  data?: any[]
   xAxis?: React.ComponentProps<typeof XAxis>
   yAxis?: React.ComponentProps<typeof YAxis>
   categories?: string[]
@@ -144,12 +144,14 @@ export function BarChart({
   showTooltip?: boolean
   showAnimation?: boolean
 } & Omit<React.ComponentProps<typeof RechartsBarChart>, "data">) {
+  // Ensure data is an array
+  const safeData = Array.isArray(data) ? data : []
   const indexKey = index || "name"
-  const categoryKeys = categories || (data[0] ? Object.keys(data[0]).filter((key) => key !== indexKey) : [])
+  const categoryKeys = categories || (safeData.length > 0 ? Object.keys(safeData[0]).filter((key) => key !== indexKey) : [])
 
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <RechartsBarChart data={data} {...props}>
+      <RechartsBarChart data={safeData} {...props}>
         {showGridLines && <CartesianGrid strokeDasharray="3 3" />}
         {showXAxis && <XAxis dataKey={indexKey} tickLine={false} axisLine={false} tickMargin={8} {...xAxis} />}
         {showYAxis && (
@@ -183,7 +185,7 @@ export function BarChart({
 
 // Export LineChart component
 export function LineChart({
-  data,
+  data = [],
   xAxis,
   yAxis,
   categories,
@@ -199,7 +201,7 @@ export function LineChart({
   showAnimation = true,
   ...props
 }: {
-  data: any[]
+  data?: any[]
   xAxis?: React.ComponentProps<typeof XAxis>
   yAxis?: React.ComponentProps<typeof YAxis>
   categories?: string[]
@@ -214,12 +216,14 @@ export function LineChart({
   showTooltip?: boolean
   showAnimation?: boolean
 } & Omit<React.ComponentProps<typeof RechartsLineChart>, "data">) {
+  // Ensure data is an array
+  const safeData = Array.isArray(data) ? data : []
   const indexKey = index || "name"
-  const categoryKeys = categories || (data[0] ? Object.keys(data[0]).filter((key) => key !== indexKey) : [])
+  const categoryKeys = categories || (safeData.length > 0 ? Object.keys(safeData[0]).filter((key) => key !== indexKey) : [])
 
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <RechartsLineChart data={data} {...props}>
+      <RechartsLineChart data={safeData} {...props}>
         {showGridLines && <CartesianGrid strokeDasharray="3 3" />}
         {showXAxis && <XAxis dataKey={indexKey} tickLine={false} axisLine={false} tickMargin={8} {...xAxis} />}
         {showYAxis && (

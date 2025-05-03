@@ -2,33 +2,30 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { BarChart, LineChart } from "@/components/ui/chart"
+import { SaferBarChart, SaferLineChart } from "@/components/ui/safer-chart-wrapper"
 import { CalendarDateRangePicker } from "@/components/date-range-picker"
 
-export function AnalyticsDashboard() {
-  // Add default sample data for charts
-  const sampleRevenueData = [
-    { name: "Jan", total: 2500 },
-    { name: "Feb", total: 3000 },
-    { name: "Mar", total: 2800 },
-    { name: "Apr", total: 3200 },
-    { name: "May", total: 4000 },
-    { name: "Jun", total: 4500 },
-    { name: "Jul", total: 5200 },
-    { name: "Aug", total: 5800 },
-    { name: "Sep", total: 4800 },
-    { name: "Oct", total: 4000 },
-    { name: "Nov", total: 3500 },
-    { name: "Dec", total: 4200 },
-  ]
+// Define the props the component expects
+// Changed file extension to .tsx to support TypeScript syntax
+interface SafeAnalyticsDashboardProps {
+  revenueData: { name: string; revenue: number }[];
+  bookingsData: { name: string; value: number }[];
+  overviewData: {
+    totalRevenue: string;
+    bookings: string;
+    occupancyRate: string;
+    averageDailyRate: string;
+  };
+}
 
-  const sampleBookingsData = [
-    { name: "Direct", value: 35 },
-    { name: "Airbnb", value: 25 },
-    { name: "Booking.com", value: 20 },
-    { name: "Expedia", value: 15 },
-    { name: "Other", value: 5 },
-  ]
+export function SafeAnalyticsDashboard({ revenueData, bookingsData, overviewData }: SafeAnalyticsDashboardProps) {
+  // Ensure we have valid data before rendering
+  const validRevenueData = Array.isArray(revenueData)
+    ? revenueData.filter(item => item && typeof item === 'object' && 'name' in item && 'revenue' in item)
+    : []
+  const validBookingsData = Array.isArray(bookingsData)
+    ? bookingsData.filter(item => item && typeof item === 'object' && 'name' in item && 'value' in item)
+    : []
 
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
@@ -51,8 +48,9 @@ export function AnalyticsDashboard() {
                 <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">$45,231.89</div>
-                <p className="text-xs text-muted-foreground">+20.1% from last month</p>
+                {/* Use data from props */}
+                <div className="text-2xl font-bold">{overviewData.totalRevenue}</div>
+                <p className="text-xs text-muted-foreground">+20.1% from last month</p> {/* Placeholder */}
               </CardContent>
             </Card>
             <Card>
@@ -60,8 +58,9 @@ export function AnalyticsDashboard() {
                 <CardTitle className="text-sm font-medium">Bookings</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">+2350</div>
-                <p className="text-xs text-muted-foreground">+180.1% from last month</p>
+                 {/* Use data from props */}
+                <div className="text-2xl font-bold">{overviewData.bookings}</div>
+                <p className="text-xs text-muted-foreground">+180.1% from last month</p> {/* Placeholder */}
               </CardContent>
             </Card>
             <Card>
@@ -69,8 +68,9 @@ export function AnalyticsDashboard() {
                 <CardTitle className="text-sm font-medium">Occupancy Rate</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">78.2%</div>
-                <p className="text-xs text-muted-foreground">+19% from last month</p>
+                 {/* Use data from props */}
+                <div className="text-2xl font-bold">{overviewData.occupancyRate}</div>
+                <p className="text-xs text-muted-foreground">+19% from last month</p> {/* Placeholder */}
               </CardContent>
             </Card>
             <Card>
@@ -78,8 +78,9 @@ export function AnalyticsDashboard() {
                 <CardTitle className="text-sm font-medium">Average Daily Rate</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">$249.99</div>
-                <p className="text-xs text-muted-foreground">+7% from last month</p>
+                 {/* Use data from props */}
+                <div className="text-2xl font-bold">{overviewData.averageDailyRate}</div>
+                <p className="text-xs text-muted-foreground">+7% from last month</p> {/* Placeholder */}
               </CardContent>
             </Card>
           </div>
@@ -89,7 +90,8 @@ export function AnalyticsDashboard() {
                 <CardTitle>Revenue Overview</CardTitle>
               </CardHeader>
               <CardContent className="pl-2">
-                <LineChart data={sampleRevenueData} categories={["total"]} />
+                {/* Use data from props */}
+                <SaferLineChart data={validRevenueData} categories={["revenue"]} />
               </CardContent>
             </Card>
             <Card className="col-span-3">
@@ -98,7 +100,8 @@ export function AnalyticsDashboard() {
                 <CardDescription>Distribution of bookings across different platforms</CardDescription>
               </CardHeader>
               <CardContent>
-                <BarChart data={sampleBookingsData} categories={["value"]} />
+                {/* Use data from props */}
+                <SaferBarChart data={validBookingsData} categories={["value"]} />
               </CardContent>
             </Card>
           </div>
@@ -110,7 +113,8 @@ export function AnalyticsDashboard() {
               <CardDescription>Monthly booking patterns and seasonal trends</CardDescription>
             </CardHeader>
             <CardContent className="pl-2">
-              <LineChart data={sampleRevenueData} categories={["total"]} />
+              {/* Use data from props */}
+              <SaferLineChart data={validRevenueData} categories={["revenue"]} />
             </CardContent>
           </Card>
         </TabsContent>
@@ -121,7 +125,8 @@ export function AnalyticsDashboard() {
               <CardDescription>Revenue by property type and location</CardDescription>
             </CardHeader>
             <CardContent className="pl-2">
-              <BarChart data={sampleBookingsData} categories={["value"]} />
+              {/* Use data from props */}
+              <SaferBarChart data={validBookingsData} categories={["value"]} />
             </CardContent>
           </Card>
         </TabsContent>
@@ -130,5 +135,4 @@ export function AnalyticsDashboard() {
   )
 }
 
-export default AnalyticsDashboard
-
+export default SafeAnalyticsDashboard
